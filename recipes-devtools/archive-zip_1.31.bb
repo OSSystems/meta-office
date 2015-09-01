@@ -3,15 +3,17 @@ SECTION = "libs"
 LICENSE = "Artistic-1.0 | GPL-1.0+"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=385c55653886acac3821999a3ccd17b3"
 
-SRC_URI = "http://www.cpan.org/authors/id/A/AD/ADAMK/Archive-Zip-${PV}.tar.gz"
-SRC_URI[md5sum] = "40153666e7538b410e001aa8a810e702"
-SRC_URI[sha256sum] = "f8b472ff77b7238e423bcb351968accc562f9d20700fbf2d8ed2a65fa0fa6318"
+PATCHREV = "04"
+
+SRC_URI = "http://www.cpan.org/authors/id/A/AD/ADAMK/Archive-Zip-${PV}_${PATCHREV}.tar.gz"
+SRC_URI[md5sum] = "491adb57024059e74767bb56040c2ecb"
+SRC_URI[sha256sum] = "ede64f6c8ecad7360fe5d8b20379f8a09afe7e7ba5f39fa10e933e798566a98c"
 
 inherit cpan
 
 DEPENDS = "zlib"
 
-S = "${WORKDIR}/Archive-Zip-${PV}"
+S = "${WORKDIR}/Archive-Zip-${PV}_${PATCHREV}"
 
 EXTRA_PERLFLAGS = "-I ${STAGING_LIBDIR_NATIVE}/perl-native/perl/${@get_perl_version(d)}"
 
