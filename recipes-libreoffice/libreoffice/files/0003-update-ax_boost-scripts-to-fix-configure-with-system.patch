@@ -1,0 +1,182 @@
+From dfba581f6d1dd64fc69ef9db9fc27059366e3f8f Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Thu, 29 Oct 2015 00:23:24 +0100
+Subject: [PATCH] update ax_boost scripts to fix configure with system boost
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Pending
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ m4/ax_boost_base.m4   | 87 +++++++++++++++++++++++++++++++--------------------
+ m4/ax_boost_system.m4 |  6 ++--
+ 2 files changed, 56 insertions(+), 37 deletions(-)
+
+diff --git a/m4/ax_boost_base.m4 b/m4/ax_boost_base.m4
+index 55de0c4..f3279f2 100644
+--- a/m4/ax_boost_base.m4
++++ b/m4/ax_boost_base.m4
+@@ -33,7 +33,7 @@
+ #   and this notice are preserved. This file is offered as-is, without any
+ #   warranty.
+ 
+-#serial 20
++#serial 26
+ 
+ AC_DEFUN([AX_BOOST_BASE],
+ [
+@@ -91,12 +91,29 @@ if test "x$want_boost" = "xyes"; then
+     dnl are found, e.g. when only header-only libraries are installed!
+     libsubdirs="lib"
+     ax_arch=`uname -m`
+-    if test $ax_arch = x86_64 -o $ax_arch = ppc64 -o $ax_arch = ppc64le -o $ax_arch = s390x -o $ax_arch = sparc64 -o $ax_arch = aarch64; then
+-        libsubdirs="lib64 lib lib64"
+-    fi
++    case $ax_arch in
++      x86_64)
++        libsubdirs="lib64 libx32 lib lib64"
++        ;;
++      ppc64|s390x|sparc64|aarch64|ppc64le)
++        libsubdirs="lib64 lib lib64 ppc64le"
++        ;;
++    esac
++
++    dnl allow for real multi-arch paths e.g. /usr/lib/x86_64-linux-gnu. Give
++    dnl them priority over the other paths since, if libs are found there, they
++    dnl are almost assuredly the ones desired.
++    AC_REQUIRE([AC_CANONICAL_HOST])
++    libsubdirs="lib/${host_cpu}-${host_os} $libsubdirs"
++
++    case ${host_cpu} in
++      i?86)
++        libsubdirs="lib/i386-${host_os} $libsubdirs"
++        ;;
++    esac
+ 
+     dnl first we check the system location for boost libraries
+-    dnl this location is chosen if boost libraries are installed with the --layout=system option
++    dnl this location ist chosen if boost libraries are installed with the --layout=system option
+     dnl or if you install boost with RPM
+     if test "$ac_boost_path" != ""; then
+         BOOST_CPPFLAGS="-I$ac_boost_path/include"
+@@ -106,13 +123,8 @@ if test "x$want_boost" = "xyes"; then
+                         break
+                 fi
+         done
+-    else
+-        if test "$cross_compiling" != yes; then
+-            ac_boost_paths='/usr /usr/local /opt /opt/local'
+-        else
+-            ac_boost_paths="/usr/$host/sys-root/mingw"
+-        fi
+-        for ac_boost_path_tmp in $ac_boost_paths ; do
++    elif test "$cross_compiling" != yes; then
++        for ac_boost_path_tmp in /usr /usr/local /opt /opt/local ; do
+             if test -d "$ac_boost_path_tmp/include/boost" && test -r "$ac_boost_path_tmp/include/boost"; then
+                 for libsubdir in $libsubdirs ; do
+                     if ls "$ac_boost_path_tmp/$libsubdir/libboost_"* >/dev/null 2>&1 ; then break; fi
+@@ -161,6 +173,10 @@ if test "x$want_boost" = "xyes"; then
+     dnl if we found no boost with system layout we search for boost libraries
+     dnl built and installed without the --layout=system option or for a staged(not installed) version
+     if test "x$succeeded" != "xyes"; then
++        CPPFLAGS="$CPPFLAGS_SAVED"
++        LDFLAGS="$LDFLAGS_SAVED"
++        BOOST_CPPFLAGS=
++        BOOST_LDFLAGS=
+         _version=0
+         if test "$ac_boost_path" != ""; then
+             if test -d "$ac_boost_path" && test -r "$ac_boost_path"; then
+@@ -173,33 +189,36 @@ if test "x$want_boost" = "xyes"; then
+                     VERSION_UNDERSCORE=`echo $_version | sed 's/\./_/'`
+                     BOOST_CPPFLAGS="-I$ac_boost_path/include/boost-$VERSION_UNDERSCORE"
+                 done
++                dnl if nothing found search for layout used in Windows distributions
++                if test -z "$BOOST_CPPFLAGS"; then
++                    if test -d "$ac_boost_path/boost" && test -r "$ac_boost_path/boost"; then
++                        BOOST_CPPFLAGS="-I$ac_boost_path"
++                    fi
++                fi
+             fi
+         else
+             if test "$cross_compiling" != yes; then
+-                ac_boost_paths='/usr /usr/local /opt /opt/local'
+-            else
+-                ac_boost_paths="/usr/$host/sys-root/mingw"
+-            fi
+-            for ac_boost_path in $ac_boost_paths ; do
+-                if test -d "$ac_boost_path" && test -r "$ac_boost_path"; then
+-                    for i in `ls -d $ac_boost_path/include/boost-* 2>/dev/null`; do
+-                        _version_tmp=`echo $i | sed "s#$ac_boost_path##" | sed 's/\/include\/boost-//' | sed 's/_/./'`
+-                        V_CHECK=`expr $_version_tmp \> $_version`
+-                        if test "$V_CHECK" = "1" ; then
+-                            _version=$_version_tmp
+-                            best_path=$ac_boost_path
+-                        fi
++                for ac_boost_path in /usr /usr/local /opt /opt/local ; do
++                    if test -d "$ac_boost_path" && test -r "$ac_boost_path"; then
++                        for i in `ls -d $ac_boost_path/include/boost-* 2>/dev/null`; do
++                            _version_tmp=`echo $i | sed "s#$ac_boost_path##" | sed 's/\/include\/boost-//' | sed 's/_/./'`
++                            V_CHECK=`expr $_version_tmp \> $_version`
++                            if test "$V_CHECK" = "1" ; then
++                                _version=$_version_tmp
++                                best_path=$ac_boost_path
++                            fi
++                        done
++                    fi
++                done
++
++                VERSION_UNDERSCORE=`echo $_version | sed 's/\./_/'`
++                BOOST_CPPFLAGS="-I$best_path/include/boost-$VERSION_UNDERSCORE"
++                if test "$ac_boost_lib_path" = ""; then
++                    for libsubdir in $libsubdirs ; do
++                        if ls "$best_path/$libsubdir/libboost_"* >/dev/null 2>&1 ; then break; fi
+                     done
++                    BOOST_LDFLAGS="-L$best_path/$libsubdir"
+                 fi
+-            done
+-
+-            VERSION_UNDERSCORE=`echo $_version | sed 's/\./_/'`
+-            BOOST_CPPFLAGS="-I$best_path/include/boost-$VERSION_UNDERSCORE"
+-            if test "$ac_boost_lib_path" = ""; then
+-                for libsubdir in $libsubdirs ; do
+-                    if ls "$best_path/$libsubdir/libboost_"* >/dev/null 2>&1 ; then break; fi
+-                done
+-                BOOST_LDFLAGS="-L$best_path/$libsubdir"
+             fi
+ 
+             if test "x$BOOST_ROOT" != "x"; then
+diff --git a/m4/ax_boost_system.m4 b/m4/ax_boost_system.m4
+index 20df5ee..c4c4555 100644
+--- a/m4/ax_boost_system.m4
++++ b/m4/ax_boost_system.m4
+@@ -31,7 +31,7 @@
+ #   and this notice are preserved. This file is offered as-is, without any
+ #   warranty.
+ 
+-#serial 15
++#serial 17
+ 
+ AC_DEFUN([AX_BOOST_SYSTEM],
+ [
+@@ -83,14 +83,14 @@ AC_DEFUN([AX_BOOST_SYSTEM],
+ 
+ 			LDFLAGS_SAVE=$LDFLAGS
+             if test "x$ax_boost_user_system_lib" = "x"; then
+-                for libextension in `ls $BOOSTLIBDIR/libboost_system*.a* $BOOSTLIBDIR/libboost_system*.so* 2>/dev/null | sed 's,.*/,,' | sed -e 's;^lib\(boost_system.*\)\.\(so\|a\).*$;\1;' | tac` ; do
++                for libextension in `ls -r $BOOSTLIBDIR/libboost_system* 2>/dev/null | sed 's,.*/lib,,' | sed 's,\..*,,'` ; do
+                      ax_lib=${libextension}
+ 				    AC_CHECK_LIB($ax_lib, exit,
+                                  [BOOST_SYSTEM_LIB="-l$ax_lib"; AC_SUBST(BOOST_SYSTEM_LIB) link_system="yes"; break],
+                                  [link_system="no"])
+ 				done
+                 if test "x$link_system" != "xyes"; then
+-                for libextension in `ls $BOOSTLIBDIR/boost_system*.{dll,a}* 2>/dev/null | sed 's,.*/,,' | sed -e 's;^\(boost_system.*\)\.\(dll\|a\).*$;\1;' | tac` ; do
++                for libextension in `ls -r $BOOSTLIBDIR/boost_system* 2>/dev/null | sed 's,.*/,,' | sed -e 's,\..*,,'` ; do
+                      ax_lib=${libextension}
+ 				    AC_CHECK_LIB($ax_lib, exit,
+                                  [BOOST_SYSTEM_LIB="-l$ax_lib"; AC_SUBST(BOOST_SYSTEM_LIB) link_system="yes"; break],
+-- 
+2.1.0
+
