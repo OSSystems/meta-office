@@ -34,6 +34,9 @@ DEPENDS += " \
     libcdr \
     librevenge \
     libcmis \
+    libfreehand \
+    libe-book \
+    libmwaw \
 "
 
 # necessary to let the call for python-config succeed
@@ -80,11 +83,9 @@ EXTRA_OECONF += " \
     --with-system-libcdr \
     --with-system-librevenge \
     --with-system-libcmis \
-"
-
-# executables created by other recipes than libreoffice-native
-LOBUILDTOOLS += " \
-    gendict \
+    --with-system-libfreehand \
+    --with-system-libebook \
+    --with-system-libmwaw \
 "
 
 do_configure() {
@@ -95,12 +96,23 @@ do_configure() {
     autoconf
     cd $olddir
     oe_runconf
+
     mkdir -p ${B}/workdir/Executable
+
+    # native binaries are expected in ${B}/workdir/LinkTarget/Executable
     mkdir -p ${B}/workdir/LinkTarget/Executable
     cd ${B}/workdir/LinkTarget/Executable
     for name in ${LOBUILDTOOLS} ; do
         ln -sf ${STAGING_BINDIR_NATIVE}/$name
-    done 
+    done
+
+    # see libreoffice-native do_install
+    ln -sf ${STAGING_BINDIR_NATIVE}/gendict_libre gendict
+
+    # icu binaries ar expected in our build tree
+    mkdir -p ${B}/workdir/UnpackedTarball/icu/source/
+    cd ${B}/workdir/UnpackedTarball/icu/source/
+    ln -sf ${STAGING_DATADIR_NATIVE}/icu/55.1/bin
 }
 
 # for scripting (requires python >= 3.3)
