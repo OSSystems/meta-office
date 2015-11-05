@@ -53,7 +53,11 @@ do_install() {
     install -d ${D}/${bindir}
     for name in ${LOBUILDTOOLS} ; do
         install "${B}/workdir/LinkTarget/Executable/$name" ${D}/${bindir}
-    done 
+    done
+
+    # icu creates a gendict to avoid conflicts rename in sysroot
+    install "${B}/workdir/LinkTarget/Executable/gendict" ${D}/${bindir}/gendict_libre
+
     install -d ${D}/${libdir}
     for name in `find ${B}/instdir/program -name *.so*` ; do
         install "$name" ${D}/${libdir}
