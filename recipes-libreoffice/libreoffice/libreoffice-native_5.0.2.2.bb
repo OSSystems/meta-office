@@ -58,6 +58,9 @@ do_install() {
     # icu creates a gendict to avoid conflicts rename in sysroot
     install "${B}/workdir/LinkTarget/Executable/gendict" ${D}/${bindir}/gendict_libre
 
+    # install sdk binaries
+    install ${B}/instdir/sdk/bin/* ${D}/${bindir}
+
     install -d ${D}/${libdir}
     for name in `find ${B}/instdir/program -name *.so*` ; do
         install "$name" ${D}/${libdir}
