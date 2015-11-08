@@ -25,7 +25,10 @@ DEPENDS += " \
     serf \
     libatomic-ops \
     lcms \
+    harfbuzz \
     \
+    mdds \
+    glm \
     redland \
     libabw \
     libwps \
@@ -37,6 +40,12 @@ DEPENDS += " \
     libfreehand \
     libe-book \
     libmwaw \
+    libetonyek \
+    libvisio \
+    libmspub \
+    libpagemaker \
+    libodfgen \
+    libgltf \
 "
 
 # necessary to let the call for python-config succeed
@@ -74,7 +83,10 @@ EXTRA_OECONF += " \
     --with-system-icu \
     --with-system-expat \
     --with-system-curl \
+    --with-system-harfbuzz \
     \
+    --with-system-glm \
+    --with-system-mdds \
     --with-system-redland \
     --with-system-libabw \
     --with-system-libwps \
@@ -86,6 +98,12 @@ EXTRA_OECONF += " \
     --with-system-libfreehand \
     --with-system-libebook \
     --with-system-libmwaw \
+    --with-system-libetonyek \
+    --with-system-libvisio \
+    --with-system-libmspub \
+    --with-system-libpagemaker \
+    --with-system-libodfgen \
+    --with-system-libgltf \
 "
 
 do_configure() {
