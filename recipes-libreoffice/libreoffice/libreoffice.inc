@@ -18,6 +18,7 @@ inherit autotools pkgconfig distutils-base perlnative pythonnative
 DEPENDS = "python3-lxml-native ccache-native archive-zip-native gperf-native bison-native"
 
 LOBUILDTOOLS = " \
+    bestreversemap \
     cpp \
     gencoll_rule \
     genconv_dict \
