@@ -10,6 +10,7 @@ DEPENDS += " \
 "
 
 EXTRA_OECONF += " \
+    --enable-python=system \
     --without-x \
     --with-system-curl \
     --with-system-boost \

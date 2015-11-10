@@ -1,0 +1,50 @@
+From 8407698e81ad907287a87bbc561544c0a84ae3c4 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Wed, 21 Oct 2015 23:27:01 +0200
+Subject: [PATCH] configure.ac: skip some cross-compile sections - they do not
+ work for oe-environment
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Inappropriate [configuration]
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ configure.ac | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 50003a6..02d1cc3 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -4570,7 +4570,7 @@ dnl machine when doing cross-compilation
+ dnl ===================================================================
+ 
+ m4_pattern_allow([PKG_CONFIG_FOR_BUILD])
+-if test "$cross_compiling" = "yes"; then
++if test "$cross_compiling" = "yesfoo"; then
+     AC_MSG_CHECKING([for BUILD platform configuration])
+     echo
+     rm -rf CONF-FOR-BUILD config_build.mk
+@@ -7749,7 +7749,7 @@ fi
+ dnl ===================================================================
+ dnl Check for system cppunit
+ dnl ===================================================================
+-if test "$cross_compiling" != "yes"; then
++if test "$cross_compiling" != "yesfoo"; then
+     libo_CHECK_SYSTEM_MODULE([cppunit],[CPPUNIT],[cppunit >= 1.12.0])
+ fi
+ 
+@@ -8014,7 +8014,7 @@ if test $enable_python = system; then
+         # Fallback: Accept these in the environment, or as set above
+         # for MacOSX.
+         :
+-    elif test "$cross_compiling" != yes; then
++    elif test "$cross_compiling" != yesfoo; then
+         # Unset variables set by the above AM_PATH_PYTHON so that
+         # we actually do check anew.
+         unset PYTHON am_cv_pathless_PYTHON ac_cv_path_PYTHON am_cv_python_version am_cv_python_platform am_cv_python_pythondir am_cv_python_pyexecdir
+-- 
+2.1.0
+

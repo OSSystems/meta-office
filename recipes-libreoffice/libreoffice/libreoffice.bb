@@ -1,8 +1,9 @@
 require ${BPN}.inc
 
 SRC_URI += " \
-    file://0001-configure.ac-skip-cross-compile-section-ist-does-not.patch \
-    file://0002-Makefile.in-avoid-building-target-cross-toolset.patch \
+    file://0002-configure.ac-skip-some-cross-compile-sections-they-d.patch \
+    file://0003-Makefile.in-avoid-building-target-cross-toolset.patch \
+    file://0004-avoid-calling-cross-build-cppumaker.patch \
 "
 
 DEPENDS += " \
@@ -26,6 +27,8 @@ DEPENDS += " \
     libatomic-ops \
     lcms \
     harfbuzz \
+    cppunit \
+    glew \
     \
     mdds \
     glm \
@@ -59,13 +62,12 @@ export STAGING_INCDIR
 # log.do_compile.
 # problems during configure detected for (TBD?)
 # * boost: 'configure: error: Could not find a version of the library!'
-# * glew: 'Requested 'glew >= 1.10.0' but version of glew is 1.9.0'
 EXTRA_OECONF += " \
     --enable-gtk3 \
     --disable-postgresql-sdbc \
     --disable-collada \
     --disable-coinmp \
-    --enable-python=internal \
+    --enable-python=system \
     --with-tls=nss \
     --with-system-poppler \
     --with-system-openldap \
@@ -84,6 +86,8 @@ EXTRA_OECONF += " \
     --with-system-expat \
     --with-system-curl \
     --with-system-harfbuzz \
+    --with-system-cppunit \
+    --with-system-glew \
     \
     --with-system-glm \
     --with-system-mdds \
