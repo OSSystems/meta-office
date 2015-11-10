@@ -29,6 +29,7 @@ DEPENDS += " \
     harfbuzz \
     cppunit \
     glew \
+    openssl \
     \
     mdds \
     glm \
@@ -49,6 +50,7 @@ DEPENDS += " \
     libpagemaker \
     libodfgen \
     libgltf \
+    libexttextcat \
 "
 
 # necessary to let the call for python-config succeed
@@ -88,6 +90,7 @@ EXTRA_OECONF += " \
     --with-system-harfbuzz \
     --with-system-cppunit \
     --with-system-glew \
+    --with-system-openssl \
     \
     --with-system-glm \
     --with-system-mdds \
@@ -108,6 +111,7 @@ EXTRA_OECONF += " \
     --with-system-libpagemaker \
     --with-system-libodfgen \
     --with-system-libgltf \
+    --with-system-libexttextcat \
 "
 
 do_configure() {
