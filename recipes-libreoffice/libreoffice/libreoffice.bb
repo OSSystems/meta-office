@@ -51,6 +51,7 @@ DEPENDS += " \
     libodfgen \
     libgltf \
     libexttextcat \
+    clucene-core \
 "
 
 # necessary to let the call for python-config succeed
@@ -112,6 +113,7 @@ EXTRA_OECONF += " \
     --with-system-libodfgen \
     --with-system-libgltf \
     --with-system-libexttextcat \
+    --with-system-clucene \
 "
 
 do_configure() {
