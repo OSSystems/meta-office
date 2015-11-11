@@ -1,0 +1,37 @@
+From e5d2149e60d54130d7bbc2ae7b07902f5e22169a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Wed, 11 Nov 2015 21:55:11 +0100
+Subject: [PATCH 3/5] align pkg-config
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Pending
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ src/core/libclucene-core.pc.cmake | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/core/libclucene-core.pc.cmake b/src/core/libclucene-core.pc.cmake
+index 0152b25..0e77633 100644
+--- a/src/core/libclucene-core.pc.cmake
++++ b/src/core/libclucene-core.pc.cmake
+@@ -1,11 +1,11 @@
+ prefix=@CMAKE_INSTALL_PREFIX@
+ exec_prefix=${prefix}/bin
+ libdir=${prefix}/@LIB_DESTINATION@
+-includedir=${prefix}/include:${prefix}/include/CLucene/ext
++includedir=${prefix}/include
+ 
+ Name: libclucene
+ Description: CLucene - a C++ search engine, ported from the popular Apache Lucene
+ Version: @CLUCENE_VERSION_MAJOR@.@CLUCENE_VERSION_MINOR@.@CLUCENE_VERSION_REVISION@.@CLUCENE_VERSION_PATCH@
+-Libs: -L${prefix}/@LIB_DESTINATION@/ -lclucene-core
+-Cflags: -I${prefix}/include -I${prefix}/include/CLucene/ext
++Libs: -L${prefix}/@LIB_DESTINATION@/ -lclucene-core -lclucene-shared
++Cflags: -I${prefix}/include
+ ~
+-- 
+2.1.0
+
