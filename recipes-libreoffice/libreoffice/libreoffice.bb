@@ -52,6 +52,7 @@ DEPENDS += " \
     libgltf \
     libexttextcat \
     clucene-core \
+    vigra \
 "
 
 # necessary to let the call for python-config succeed
@@ -114,6 +115,7 @@ EXTRA_OECONF += " \
     --with-system-libgltf \
     --with-system-libexttextcat \
     --with-system-clucene \
+    --with-system-vigra \
 "
 
 do_configure() {
