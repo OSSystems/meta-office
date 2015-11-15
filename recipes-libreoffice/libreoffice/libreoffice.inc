@@ -30,6 +30,7 @@ LOBUILDTOOLS = " \
     transex3 \
     unoidl-check \
     unoidl-write \
+    saxparser \
 "
 
 EXTRA_OECONF = " \
