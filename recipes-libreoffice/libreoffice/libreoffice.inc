@@ -26,11 +26,12 @@ LOBUILDTOOLS = " \
     genconv_dict \
     genindex_data \
     rsc \
+    saxparser \
     svidl \
     transex3 \
+    ulfex \
     unoidl-check \
     unoidl-write \
-    saxparser \
 "
 
 EXTRA_OECONF = " \
