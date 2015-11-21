@@ -48,15 +48,13 @@ do_compile() {
     BUILDDIR=${B} oe_runmake -f ${S}/Makefile.gbuild build-tools
 }
 
-#LOBUILDLIBS = "libtllo.so  libuno_sal.so.3"
-
 do_install() {
     install -d ${D}/${bindir}
     for name in ${LOBUILDTOOLS} ; do
         install "${B}/workdir/LinkTarget/Executable/$name" ${D}/${bindir}
     done
 
-    # icu creates a gendict to avoid conflicts rename in sysroot
+    # icu creates a gendict. To avoid conflicts rename in sysroot
     install "${B}/workdir/LinkTarget/Executable/gendict" ${D}/${bindir}/gendict_libre
 
     # install sdk binaries
@@ -66,8 +64,4 @@ do_install() {
     for name in `find ${B}/instdir/program -name *.so*` ; do
         install "$name" ${D}/${libdir}
     done
-
-#    for name in ${LOBUILDLIBS} ; do
-#        install "${B}/instdir/program/$name" ${D}/${libdir}
-#    done
 }
