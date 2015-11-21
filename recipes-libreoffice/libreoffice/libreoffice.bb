@@ -3,7 +3,8 @@ require ${BPN}.inc
 SRC_URI += " \
     file://0002-configure.ac-skip-some-cross-compile-sections-they-d.patch \
     file://0003-Makefile.in-avoid-building-target-cross-toolset.patch \
-    file://0004-avoid-calling-cross-build-cppumaker.patch \
+    file://0004-remove-paths-for-gb_Executable_get_command.patch \
+    file://0005-ensure-that-native-gendict-build-by-libreoffice-is-u.patch \
 "
 
 DEPENDS += " \
@@ -128,16 +129,6 @@ do_configure() {
     oe_runconf
 
     mkdir -p ${B}/workdir/Executable
-
-    # native binaries are expected in ${B}/workdir/LinkTarget/Executable
-    mkdir -p ${B}/workdir/LinkTarget/Executable
-    cd ${B}/workdir/LinkTarget/Executable
-    for name in ${LOBUILDTOOLS} ; do
-        ln -sf ${STAGING_BINDIR_NATIVE}/$name
-    done
-
-    # see libreoffice-native do_install
-    ln -sf ${STAGING_BINDIR_NATIVE}/gendict_libre gendict
 
     # icu binaries ar expected in our build tree
     mkdir -p ${B}/workdir/UnpackedTarball/icu/source/

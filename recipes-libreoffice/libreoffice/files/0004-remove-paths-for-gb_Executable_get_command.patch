@@ -1,0 +1,33 @@
+From 502ff5208fc4326960b9d1e9f25642046dc64a28 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Sat, 21 Nov 2015 23:56:19 +0100
+Subject: [PATCH] remove paths for gb_Executable_get_command
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+use binaries found in our native sysroot
+
+Upstream-Status: Inappropriate [oe specific]
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ solenv/gbuild/TargetLocations.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/solenv/gbuild/TargetLocations.mk b/solenv/gbuild/TargetLocations.mk
+index 82857a9..0aa2cbd 100644
+--- a/solenv/gbuild/TargetLocations.mk
++++ b/solenv/gbuild/TargetLocations.mk
+@@ -355,7 +355,7 @@ endef
+ #
+ # gb_Executable_get_command executable
+ define gb_Executable_get_command
+-$(gb_Helper_set_ld_path) $(BUILDTOOLTRACE) $(2) $(call gb_Executable_get_target_for_build,$(1))
++$(1)
+ endef
+ 
+ define gb_Executable__get_workdir_linktargetname
+-- 
+2.1.0
+

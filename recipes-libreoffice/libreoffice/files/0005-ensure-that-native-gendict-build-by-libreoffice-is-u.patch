@@ -1,0 +1,43 @@
+From 900b79ed77cd5c126cc4ac9beef488a94ef57b06 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Fri, 20 Nov 2015 22:03:58 +0100
+Subject: [PATCH] ensure that native gendict build by libreoffice is used
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+This is neccessary since last commit using all helpers from native sysroot
+
+Upstream-Status: Inappropriate [oe specific]
+
+Change-Id: I0afbd760bc8810396e04a5e276a68a810042b057
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ i18npool/CustomTarget_breakiterator.mk | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/i18npool/CustomTarget_breakiterator.mk b/i18npool/CustomTarget_breakiterator.mk
+index 4aaf2e5..5837bc8 100644
+--- a/i18npool/CustomTarget_breakiterator.mk
++++ b/i18npool/CustomTarget_breakiterator.mk
+@@ -22,7 +22,7 @@ $(i18npool_BIDIR)/dict_%.data : \
+ 		| $(i18npool_BIDIR)/.dir
+ 	$(call gb_Output_announce,$(subst $(WORKDIR)/,,$@),$(true),DIC,1)
+ 	$(call gb_Helper_abbreviate_dirs,\
+-		$(call gb_Helper_execute,gendict) $< $@ $(patsubst $(i18npool_BIDIR)/dict_%.cxx,%,$@))
++		$(call gb_Helper_execute,gendict_libre) $< $@ $(patsubst $(i18npool_BIDIR)/dict_%.cxx,%,$@))
+ else
+ 
+ $(call gb_CustomTarget_get_target,i18npool/breakiterator) : \
+@@ -34,7 +34,7 @@ $(i18npool_BIDIR)/dict_%.cxx : \
+ 		| $(i18npool_BIDIR)/.dir
+ 	$(call gb_Output_announce,$(subst $(WORKDIR)/,,$@),$(true),DIC,1)
+ 	$(call gb_Helper_abbreviate_dirs,\
+-		$(call gb_Helper_execute,gendict) $< $@ $(patsubst $(i18npool_BIDIR)/dict_%.cxx,%,$@))
++		$(call gb_Helper_execute,gendict_libre) $< $@ $(patsubst $(i18npool_BIDIR)/dict_%.cxx,%,$@))
+ 
+ endif
+ 
+-- 
+2.1.0
+
