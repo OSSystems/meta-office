@@ -1,0 +1,29 @@
+From c3baa66501375419563ba6d44685df347ae09a8a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Sun, 22 Nov 2015 21:44:04 +0100
+Subject: [PATCH] saxparser: output calling parametrs for debug
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ i18npool/source/localedata/saxparser.cxx | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/i18npool/source/localedata/saxparser.cxx b/i18npool/source/localedata/saxparser.cxx
+index 1674478..7bc89a1 100644
+--- a/i18npool/source/localedata/saxparser.cxx
++++ b/i18npool/source/localedata/saxparser.cxx
+@@ -325,6 +325,8 @@ SAL_IMPLEMENT_MAIN_WITH_ARGS(argc, argv)
+             exit( 1 );
+         }
+ 
++        printf( "called: %s %s %s %s\n", argv[0], argv[1], argv[2], argv[3] );
++
+         Reference< XComponentContext > xContext(
+             defaultBootstrap_InitialComponentContext());
+ 
+-- 
+2.1.0
+

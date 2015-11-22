@@ -9,6 +9,10 @@ DEPENDS += " \
     expat-native \
 "
 
+SRC_URI += " \
+    file://0006-saxparser-output-calling-parametrs-for-debug.patch \
+"
+
 EXTRA_OECONF += " \
     --enable-python=system \
     --without-x \
