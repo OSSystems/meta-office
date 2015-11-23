@@ -62,18 +62,30 @@ export HOST_SYS
 export STAGING_LIBDIR
 export STAGING_INCDIR
 
-# By default many many sources are downloaded from libreoffice mirrors. 
+# Notes:
+#
+# 1. By default many many sources are downloaded from libreoffice mirrors.
 # This can be avoided by --with-system-.. To see what's still loaded check
 # log.do_compile.
-# problems during configure detected for (TBD?)
+#
+# 2. problems during configure detected for (TBD?)
 # * boost: 'configure: error: Could not find a version of the library!'
+#
+# 3. in case of trouble in do_compile: configure with --enable-verbose might
+# help detecting culprit
+#
+# 4. TODO --with-parallelism
+
 EXTRA_OECONF += " \
+    --enable-verbose \
+    \
     --enable-gtk3 \
     --disable-postgresql-sdbc \
     --disable-collada \
     --disable-coinmp \
     --enable-python=system \
     --with-tls=nss \
+    \
     --with-system-poppler \
     --with-system-openldap \
     --with-system-zlib \
@@ -130,7 +142,7 @@ do_configure() {
 
     mkdir -p ${B}/workdir/Executable
 
-    # icu binaries ar expected in our build tree
+    # icu binaries are expected in our build tree
     mkdir -p ${B}/workdir/UnpackedTarball/icu/source/
     cd ${B}/workdir/UnpackedTarball/icu/source/
     ln -sf ${STAGING_DATADIR_NATIVE}/icu/55.1/bin
