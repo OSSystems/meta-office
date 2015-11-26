@@ -1,0 +1,35 @@
+From 98774bf61294703183118b7953f6a92cad6da068 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Thu, 26 Nov 2015 17:48:19 +0100
+Subject: [PATCH] cppumaker: output more detailed error message
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Inappropriate [oe specific]
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ codemaker/source/cppumaker/cpputype.cxx | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/codemaker/source/cppumaker/cpputype.cxx b/codemaker/source/cppumaker/cpputype.cxx
+index 0b3e9fd..26a9a73 100644
+--- a/codemaker/source/cppumaker/cpputype.cxx
++++ b/codemaker/source/cppumaker/cpputype.cxx
+@@ -3385,11 +3385,7 @@ static OUString failsToSupply(const OUString& name_, const OString& baseName)
+ {
+     return OUString(
+             "\n"
+-            "#if OSL_DEBUG_LEVEL > 0\n"
+-            "                ::rtl::OUString(\"component context fails to supply service '" + name_ + "' of type '" + OStringToOUString(baseName, RTL_TEXTENCODING_UTF8) + "'\")\n"
+-            "#else\n"
+-            "                ::rtl::OUString(\"service not supplied\")\n"
+-            "#endif\n");
++            "                ::rtl::OUString(\"component context fails to supply service '" + name_ + "' of type '" + OStringToOUString(baseName, RTL_TEXTENCODING_UTF8) + "'\")\n");
+ }
+ 
+ void ServiceType::dumpHxxFile(
+-- 
+2.1.0
+

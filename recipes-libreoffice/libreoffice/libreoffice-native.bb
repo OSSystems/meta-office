@@ -11,9 +11,13 @@ DEPENDS += " \
 
 SRC_URI += " \
     file://0006-saxparser-output-calling-parametrs-for-debug.patch \
+    file://0007-cppumaker-output-more-detailed-error-message.patch \
 "
 
 EXTRA_OECONF += " \
+    --enable-debug \
+    --enable-dbgutil \
+    \
     --enable-python=system \
     --without-x \
     --with-system-curl \
@@ -48,6 +52,9 @@ do_configure() {
     oe_runconf
 }
 
+CXXFLAGS += "-g -O0 -DSAL_LOG_INFO -DSAL_LOG_WARN"
+LDFLAGS += "-g"
+
 do_compile() {
     BUILDDIR=${B} oe_runmake -f ${S}/Makefile.gbuild build-tools
 }
@@ -64,8 +71,9 @@ do_install() {
     # install sdk binaries
     install ${B}/instdir/sdk/bin/* ${D}/${bindir}
 
+    # install libraries and defaults
     install -d ${D}/${libdir}
-    for name in `find ${B}/instdir/program -name *.so*` ; do
+    for name in `find ${B}/instdir/program -type f` ; do
         install "$name" ${D}/${libdir}
     done
 }
