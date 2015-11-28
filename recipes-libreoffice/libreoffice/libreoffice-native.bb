@@ -52,10 +52,12 @@ do_configure() {
     oe_runconf
 }
 
+# for debugging - we can as we're native
 CXXFLAGS += "-g -O0 -DSAL_LOG_INFO -DSAL_LOG_WARN"
 LDFLAGS += "-g"
 
 do_compile() {
+    # inspired by ${B}/Makefile
     BUILDDIR=${B} oe_runmake -f ${S}/Makefile.gbuild build-tools
 }
 
