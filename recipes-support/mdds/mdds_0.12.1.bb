@@ -12,3 +12,5 @@ SRC_URI[sha256sum] = "23565e9d7810a6ac30478833813db847f80e927b414a7be07b7cc03ed3
 S = "${WORKDIR}/${BPN}_${PV}"
 
 DEPENDS = "boost"
+
+BBCLASSEXTEND = "native"
