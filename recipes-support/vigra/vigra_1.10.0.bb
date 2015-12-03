@@ -18,3 +18,5 @@ do_install_append() {
     # so delete it
     rm -rf "${D}/${prefix}/doc"
 }
+
+BBCLASSEXTEND = "native"
