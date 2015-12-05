@@ -12,6 +12,7 @@ DEPENDS += " \
 SRC_URI += " \
     file://0006-saxparser-output-calling-parametrs-for-debug.patch \
     file://0007-cppumaker-output-more-detailed-error-message.patch \
+    file://0008-cppuhelper-defaultbootstrap-output-debug-information.patch \
 "
 
 EXTRA_OECONF += " \

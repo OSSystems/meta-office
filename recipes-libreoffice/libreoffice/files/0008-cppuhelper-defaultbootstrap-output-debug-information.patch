@@ -1,0 +1,50 @@
+From 691674ce51be55f02464c6b6180680a41a64f906 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Tue, 1 Dec 2015 00:09:32 +0100
+Subject: [PATCH] cppuhelper / defaultbootstrap: output debug information in
+ getBootstrapVariable
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Inappropriate [configuration]
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ cppuhelper/source/defaultbootstrap.cxx | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/cppuhelper/source/defaultbootstrap.cxx b/cppuhelper/source/defaultbootstrap.cxx
+index 1fbbf8f..75160e8 100644
+--- a/cppuhelper/source/defaultbootstrap.cxx
++++ b/cppuhelper/source/defaultbootstrap.cxx
+@@ -11,6 +11,7 @@
+ 
+ #include <cassert>
+ #include <vector>
++#include <stdio.h>
+ 
+ #include <com/sun/star/uno/DeploymentException.hpp>
+ #include <com/sun/star/uno/Any.hxx>
+@@ -22,6 +23,7 @@
+ #include <rtl/bootstrap.hxx>
+ #include <rtl/ref.hxx>
+ #include <rtl/ustring.hxx>
++#include <rtl/string.hxx>
+ 
+ using rtl::OUString;
+ 
+@@ -40,6 +42,10 @@ rtl::OUString getBootstrapVariable(
+         throw css::uno::DeploymentException(
+             "Cannot obtain " + name + " from uno ini");
+     }
++    OString Oname = OUStringToOString( name, RTL_TEXTENCODING_ASCII_US );
++    OString Ov = OUStringToOString( v, RTL_TEXTENCODING_ASCII_US );
++    printf( "getBootstrapVariable(%s) returns '%s'\n", Oname.pData->buffer, Ov.pData->buffer );
++
+     return v;
+ }
+ 
+-- 
+2.1.0
+
