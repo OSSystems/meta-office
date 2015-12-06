@@ -79,4 +79,9 @@ do_install() {
     for name in `find ${B}/instdir/program -type f` ; do
         install "$name" ${D}/${libdir}
     done
+
+    # move saxparser.rdb to libdir - we'll need it for cross building
+    cp -rf ${B}/workdir/Rdb/saxparser.rdb ${D}/${libdir}
+    # fix library path - otherwise cross lib is pulled for native saxparse
+    sed -i 's:LO_LIB_DIR:URE_INTERNAL_LIB_DIR:g' ${D}/${libdir}/saxparser.rdb
 }
