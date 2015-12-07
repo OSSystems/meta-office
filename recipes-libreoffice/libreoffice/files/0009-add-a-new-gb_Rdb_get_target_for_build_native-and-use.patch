@@ -1,0 +1,47 @@
+From cf939a0c4e49d34f5bd795dbbbd1a7ae396ce622 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Sun, 6 Dec 2015 22:23:17 +0100
+Subject: [PATCH] add a new gb_Rdb_get_target_for_build_native and use it
+ i18npool/CustomTarget_localedata
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+We need to use native saxparser
+
+Upstream-Status: Inappropriate [cross specific]
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ i18npool/CustomTarget_localedata.mk | 2 +-
+ solenv/gbuild/TargetLocations.mk    | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/i18npool/CustomTarget_localedata.mk b/i18npool/CustomTarget_localedata.mk
+index 481b3ee..28cd67c 100644
+--- a/i18npool/CustomTarget_localedata.mk
++++ b/i18npool/CustomTarget_localedata.mk
+@@ -23,7 +23,7 @@ $(call gb_CustomTarget_get_workdir,i18npool/localedata)/localedata_$(1).cxx : \
+ 	$$(call gb_Helper_abbreviate_dirs, \
+ 		$$(call gb_Helper_execute,saxparser) $(1) $$< $$@.tmp \
+ 			-env:LO_LIB_DIR=$(call gb_Helper_make_url,$(INSTROOT_FOR_BUILD)/$(LIBO_LIB_FOLDER)) \
+-			-env:URE_MORE_SERVICES=$(call gb_Helper_make_url,$(call gb_Rdb_get_target_for_build,saxparser)) \
++			-env:URE_MORE_SERVICES=$(call gb_Helper_make_url,$(call gb_Rdb_get_target_for_build_native,saxparser)) \
+ 			$(if $(findstring s,$(MAKEFLAGS)),> /dev/null 2>&1) && \
+ 		sed 's/\(^.*get[^;]*$$$$\)/SAL_DLLPUBLIC_EXPORT \1/' $$@.tmp > $$@ && \
+ 		rm $$@.tmp)
+diff --git a/solenv/gbuild/TargetLocations.mk b/solenv/gbuild/TargetLocations.mk
+index 82857a9..d1c2e92 100644
+--- a/solenv/gbuild/TargetLocations.mk
++++ b/solenv/gbuild/TargetLocations.mk
+@@ -138,6 +138,7 @@ gb_Pyuno_get_final_target = $(WORKDIR)/Pyuno/$(1).final
+ gb_Pyuno_get_target = $(WORKDIR)/Pyuno/$(1).done
+ gb_Rdb_get_target = $(WORKDIR)/Rdb/$(1).rdb
+ gb_Rdb_get_target_for_build = $(WORKDIR_FOR_BUILD)/Rdb/$(1).rdb
++gb_Rdb_get_target_for_build_native = %STAGING_LIBDIR_NATIVE%/$(1).rdb
+ gb_ResTarget_get_imagelist_target = $(WORKDIR)/ResTarget/$(1).ilst
+ gb_ResTarget_get_target = $(WORKDIR)/ResTarget/$(1).res
+ gb_ScpMergeTarget_get_target = $(WORKDIR)/ScpMergeTarget/$(1).ulf
+-- 
+2.5.0
+

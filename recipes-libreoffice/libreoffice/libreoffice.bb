@@ -5,6 +5,7 @@ SRC_URI += " \
     file://0003-Makefile.in-avoid-building-target-cross-toolset.patch \
     file://0004-remove-paths-for-gb_Executable_get_command.patch \
     file://0005-ensure-that-native-gendict-build-by-libreoffice-is-u.patch \
+    file://0009-add-a-new-gb_Rdb_get_target_for_build_native-and-use.patch \
 "
 
 DEPENDS += " \
@@ -146,6 +147,9 @@ do_configure() {
     mkdir -p ${B}/workdir/UnpackedTarball/icu/source/
     cd ${B}/workdir/UnpackedTarball/icu/source/
     ln -sf ${STAGING_DATADIR_NATIVE}/icu/55.1/bin
+
+    # link to native saxparser.rdb - cross version of that file is useless
+    sed -i 's:%STAGING_LIBDIR_NATIVE%:${STAGING_LIBDIR_NATIVE}:g' ${S}/solenv/gbuild/TargetLocations.mk
 }
 
 # for scripting (requires python >= 3.3)
