@@ -7,6 +7,8 @@ DEPENDS += " \
     boost-native \
     icu-native \
     expat-native \
+    lcms-native \
+    nss-native \
 "
 
 SRC_URI += " \
@@ -23,11 +25,14 @@ EXTRA_OECONF += " \
     --without-x \
     --with-system-curl \
     --with-system-boost \
+    --with-system-icu \
+    --with-system-expat \
+    --with-system-lcms2 \
+    --with-system-nss \
+    \
     --without-boost-date-time \
     --without-boost-iostreams \
     --without-boost-system \
-    --with-system-icu \
-    --with-system-expat \
     --disable-postgresql-sdbc \
     --disable-lotuswordpro \
     --disable-firebird-sdbc \
@@ -60,6 +65,7 @@ LDFLAGS += "-g"
 do_compile() {
     # inspired by ${B}/Makefile
     BUILDDIR=${B} oe_runmake -f ${S}/Makefile.gbuild build-tools
+    BUILDDIR=${B} oe_runmake Executable_gengal
 }
 
 do_install() {
@@ -84,4 +90,7 @@ do_install() {
     cp -rf ${B}/workdir/Rdb/saxparser.rdb ${D}/${libdir}
     # fix library path - otherwise cross lib is pulled for native saxparse
     sed -i 's:LO_LIB_DIR:URE_INTERNAL_LIB_DIR:g' ${D}/${libdir}/saxparser.rdb
+
+    # gengal
+    install ${S}/svx/source/gengal/gengal.sh ${D}/${bindir}/gengal
 }
