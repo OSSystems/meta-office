@@ -91,6 +91,7 @@ do_install() {
     # fix library path - otherwise cross lib is pulled for native saxparse
     sed -i 's:LO_LIB_DIR:URE_INTERNAL_LIB_DIR:g' ${D}/${libdir}/saxparser.rdb
 
-    # gengal
+    # gengal script and binary to expected location
     install ${S}/svx/source/gengal/gengal.sh ${D}/${bindir}/gengal
+    mv ${D}/${libdir}/gengal.bin ${D}/${bindir}
 }
