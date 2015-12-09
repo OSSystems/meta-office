@@ -66,6 +66,7 @@ do_compile() {
     # inspired by ${B}/Makefile
     BUILDDIR=${B} oe_runmake -f ${S}/Makefile.gbuild build-tools
     BUILDDIR=${B} oe_runmake Executable_gengal
+    BUILDDIR=${B} oe_runmake Library_ucb1
 }
 
 do_install() {
