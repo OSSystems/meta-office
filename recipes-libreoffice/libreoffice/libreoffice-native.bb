@@ -65,8 +65,12 @@ LDFLAGS += "-g"
 do_compile() {
     # inspired by ${B}/Makefile
     BUILDDIR=${B} oe_runmake -f ${S}/Makefile.gbuild build-tools
+    # gengal was not designed for build on its own - we need to add dependencies
     BUILDDIR=${B} oe_runmake Executable_gengal
     BUILDDIR=${B} oe_runmake Library_ucb1
+    BUILDDIR=${B} oe_runmake Library_configmgr
+    BUILDDIR=${B} oe_runmake Library_fwk
+    BUILDDIR=${B} oe_runmake Library_i18npool
 }
 
 do_install() {
