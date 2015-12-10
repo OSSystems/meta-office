@@ -1,0 +1,33 @@
+From 8f21c644930042bca1725b9547f4a4585fe79784 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Wed, 9 Dec 2015 23:20:14 +0100
+Subject: [PATCH] make sure that gengal uses native libraries
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Inappropriate [cross specific]
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ solenv/gbuild/Gallery.mk | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/solenv/gbuild/Gallery.mk b/solenv/gbuild/Gallery.mk
+index 2ce708d..44d1bf4 100644
+--- a/solenv/gbuild/Gallery.mk
++++ b/solenv/gbuild/Gallery.mk
+@@ -23,8 +23,8 @@ define gb_Gallery__make_env_args
+ 		$(call gb_Helper_make_url,$(call gb_ComponentTarget_get_target_for_build,$(item))))" \
+ "-env:UNO_TYPES=$(foreach item,offapi udkapi,\
+ 	$(call gb_Helper_make_url,$(call gb_UnoApi_get_target,$(item))))" \
+--env:URE_INTERNAL_LIB_DIR=$(call gb_Helper_make_url,$(INSTROOT_FOR_BUILD)/$(LIBO_URE_LIB_FOLDER_FOR_BUILD)) \
+--env:LO_LIB_DIR=$(call gb_Helper_make_url,$(INSTROOT_FOR_BUILD)/$(LIBO_LIB_FOLDER_FOR_BUILD))
++-env:URE_INTERNAL_LIB_DIR=%STAGING_LIBDIR_NATIVE% \
++-env:LO_LIB_DIR=%STAGING_LIBDIR_NATIVE%
+ endef
+ 
+ define gb_Gallery__command
+-- 
+2.5.0
+

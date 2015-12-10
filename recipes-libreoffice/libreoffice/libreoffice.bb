@@ -6,6 +6,7 @@ SRC_URI += " \
     file://0004-remove-paths-for-gb_Executable_get_command.patch \
     file://0005-ensure-that-native-gendict-build-by-libreoffice-is-u.patch \
     file://0009-add-a-new-gb_Rdb_get_target_for_build_native-and-use.patch \
+    file://0010-make-sure-that-gengal-uses-native-libraries.patch \
 "
 
 DEPENDS += " \
@@ -152,6 +153,9 @@ do_configure() {
 
     # link to native saxparser.rdb - cross version of that file is useless
     sed -i 's:%STAGING_LIBDIR_NATIVE%:${STAGING_LIBDIR_NATIVE}:g' ${S}/solenv/gbuild/TargetLocations.mk
+
+    # ensure gengal loads native libraries
+    sed -i 's:%STAGING_LIBDIR_NATIVE%:${STAGING_LIBDIR_NATIVE}:g' ${S}/solenv/gbuild/Gallery.mk
 }
 
 # for scripting (requires python >= 3.3)
