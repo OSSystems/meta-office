@@ -1,0 +1,54 @@
+From 5caf9ca138e89434249f2878334231011e382687 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Fri, 18 Dec 2015 22:09:29 +0100
+Subject: [PATCH] fix build for x-less/cairo-less build
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: submitted [1]
+
+[1] https://bugs.documentfoundation.org/show_bug.cgi?id=96587
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ vcl/headless/svpgdi.cxx | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/vcl/headless/svpgdi.cxx b/vcl/headless/svpgdi.cxx
+index cc4baab..85f8a35 100644
+--- a/vcl/headless/svpgdi.cxx
++++ b/vcl/headless/svpgdi.cxx
+@@ -657,6 +657,7 @@ bool SvpSalGraphics::drawPolyPolygonBezier( sal_uInt32,
+     return false;
+ }
+ 
++#if ENABLE_CAIRO_CANVAS
+ #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 10, 0)
+ static void AddPolygonToPath(cairo_t* cr, const basegfx::B2DPolygon& rPolygon, bool bClosePath)
+ {
+@@ -719,11 +720,13 @@ static void AddPolygonToPath(cairo_t* cr, const basegfx::B2DPolygon& rPolygon, b
+     }
+ }
+ #endif
++#endif
+ 
+ bool SvpSalGraphics::drawPolyPolygon(const basegfx::B2DPolyPolygon& rPolyPoly, double fTransparency)
+ {
+     bool bRet = false;
+     (void)rPolyPoly; (void)fTransparency;
++#if ENABLE_CAIRO_CANVAS
+ #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 10, 0)
+     if (m_bUseLineColor || !m_bUseFillColor)
+     {
+@@ -768,6 +771,7 @@ bool SvpSalGraphics::drawPolyPolygon(const basegfx::B2DPolyPolygon& rPolyPoly, d
+     }
+     bRet = true;
+ #endif
++#endif
+     return bRet;
+ }
+ 
+-- 
+2.5.0
+

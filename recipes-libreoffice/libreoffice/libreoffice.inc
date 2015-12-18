@@ -6,14 +6,14 @@ LIC_FILES_CHKSUM = " \
     file://COPYING.MPL;md5=9741c346eef56131163e13b9db1241b3 \
 "
 
-PV = "5.0.3.2"
+PV = "5.0.4.2"
 
 SRC_URI = " \
-    http://download.documentfoundation.org/libreoffice/src/5.0.3/libreoffice-${PV}.tar.xz \
+    http://download.documentfoundation.org/libreoffice/src/5.0.4/libreoffice-${PV}.tar.xz \
     file://0001-update-ax_boost-scripts-to-fix-configure-with-system.patch \
 "
-SRC_URI[md5sum] = "879471fa970c30bb080e11906a3bcdab"
-SRC_URI[sha256sum] = "77f9c9569c1199d914f38afa01547c1874535c56ad74b19614a0afc3ad66d4bd"
+SRC_URI[md5sum] = "0c6381581f93ef7142b00837002755dd"
+SRC_URI[sha256sum] = "647440b70fc190a43a3373cfe5b06a87558ee07711e3d74cab8fb9d8cbac6dc8"
 
 inherit autotools pkgconfig distutils-base perlnative
 
@@ -37,4 +37,10 @@ LOBUILDTOOLS = " \
 EXTRA_OECONF = " \
     --without-java \
     --without-doxygen \
+    \
+    --with-system-librevenge \
+    --with-system-libabw \
+    --with-system-libcdr \
+    --with-system-libebook \
+    --with-system-libfreehand \
 "

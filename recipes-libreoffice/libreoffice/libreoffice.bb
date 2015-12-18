@@ -12,6 +12,7 @@ SRC_URI += " \
 DEPENDS += " \
     ${BPN}-native \
     gtk+3 \
+    cairo \
     curl \
     boost \
     icu \
@@ -90,6 +91,7 @@ EXTRA_OECONF += " \
     --enable-python=system \
     --with-tls=nss \
     \
+    --with-system-cairo \
     --with-system-poppler \
     --with-system-openldap \
     --with-system-zlib \
@@ -107,22 +109,17 @@ EXTRA_OECONF += " \
     --with-system-expat \
     --with-system-curl \
     --with-system-harfbuzz \
-    --with-system-cppunit \
     --with-system-glew \
     --with-system-openssl \
     \
+    --with-system-cppunit \
     --with-system-glm \
     --with-system-mdds \
     --with-system-redland \
-    --with-system-libabw \
     --with-system-libwps \
     --with-system-libwpg \
     --with-system-libwpd \
-    --with-system-libcdr \
-    --with-system-librevenge \
     --with-system-libcmis \
-    --with-system-libfreehand \
-    --with-system-libebook \
     --with-system-libmwaw \
     --with-system-libetonyek \
     --with-system-libvisio \
