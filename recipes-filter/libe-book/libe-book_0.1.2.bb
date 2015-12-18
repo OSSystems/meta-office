@@ -12,3 +12,5 @@ SRC_URI[sha256sum] = "7f894b1538b71c6cd96c976069c4dadb38b623612f0e35b2f6ee8a2c46
 inherit autotools pkgconfig
 
 DEPENDS = "icu libxml2 librevenge boost-native"
+
+BBCLASSEXTEND = "native"
