@@ -12,3 +12,5 @@ SRC_URI[sha256sum] = "dedd6fe1f643fc2f254f2ad3719547084bd86bcc482104b995caf3b828
 inherit autotools pkgconfig
 
 DEPENDS = "cppunit zlib boost"
+
+BBCLASSEXTEND = "native"
