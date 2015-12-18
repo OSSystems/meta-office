@@ -12,3 +12,5 @@ SRC_URI[sha256sum] = "cfc698c2dd4ab592138a941ae26e2e18c3dac69bc196b5167df7f5eb88
 inherit autotools pkgconfig
 
 DEPENDS = "libxml2 librevenge"
+
+BBCLASSEXTEND = "native"
