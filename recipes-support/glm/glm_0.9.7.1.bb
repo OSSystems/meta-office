@@ -23,3 +23,5 @@ do_configure() {
 }
 
 FILES_${PN}-dev += "${libdir}/cmake"
+
+BBCLASSEXTEND = "native"
