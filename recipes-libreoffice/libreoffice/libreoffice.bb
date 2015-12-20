@@ -58,6 +58,7 @@ DEPENDS += " \
     clucene-core \
     vigra \
     hunspell \
+    mythes \
 "
 
 # necessary to let the call for python-config succeed
@@ -117,10 +118,13 @@ EXTRA_OECONF += " \
     --with-system-glm \
     --with-system-mdds \
     --with-system-redland \
+    --with-system-libabw \
     --with-system-libwps \
     --with-system-libwpg \
     --with-system-libwpd \
+    --with-system-libcdr \
     --with-system-libcmis \
+    --with-system-libebook \
     --with-system-libmwaw \
     --with-system-libetonyek \
     --with-system-libvisio \
@@ -132,6 +136,7 @@ EXTRA_OECONF += " \
     --with-system-clucene \
     --with-system-vigra \
     --with-system-hunspell \
+    --with-system-mythes \
 "
 
 do_configure() {
