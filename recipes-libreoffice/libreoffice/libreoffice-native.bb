@@ -4,6 +4,10 @@ inherit native
 
 DEPENDS += " \
     curl-native \
+    libpng-native \
+    jpeg-native \
+    libxml2-native \
+    harfbuzz-native \
     boost-native \
     icu-native \
     expat-native \
@@ -15,6 +19,16 @@ DEPENDS += " \
     libe-book-native \
     libfreehand-native \
     hunspell-native \
+    mythes-native \
+    clucene-core-native \
+    libcmis-native \
+    mdds-native \
+    libpagemaker-native \
+    glm-native \
+    libetonyek-native \
+    vigra-native \
+    libvisio-native \
+    libexttextcat-native \
 "
 
 SRC_URI += " \
@@ -25,18 +39,37 @@ SRC_URI += " \
 "
 
 EXTRA_OECONF += " \
-    --enable-debug \
-    --enable-dbgutil \
+    --enable-verbose \
     \
     --enable-python=system \
     --without-x \
+    \
     --with-system-curl \
+    --with-system-libpng \
+    --with-system-jpeg \
+    --with-system-libxml \
+    --with-system-harfbuzz \
     --with-system-boost \
     --with-system-icu \
     --with-system-expat \
     --with-system-lcms2 \
     --with-system-nss \
+    --with-system-cppunit \
+    --with-system-libabw \
+    --with-system-libcdr \
+    --with-system-libebook \
+    --with-system-libfreehand \
     --with-system-hunspell \
+    --with-system-mythes \
+    --with-system-clucene \
+    --with-system-libcmis \
+    --with-system-mdds \
+    --with-system-libpagemaker \
+    --with-system-glm \
+    --with-system-libetonyek \
+    --with-system-vigra \
+    --with-system-libvisio \
+    --with-system-libexttextcat \
     \
     --without-boost-date-time \
     --without-boost-iostreams \
