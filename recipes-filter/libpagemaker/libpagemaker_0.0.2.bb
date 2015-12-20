@@ -11,3 +11,5 @@ SRC_URI[sha256sum] = "cdbdf86605773339caab6477ff694a95a90aaa4d45bb6cdb59e4a7f76c
 inherit autotools pkgconfig
 
 DEPENDS = "icu librevenge"
+
+BBCLASSEXTEND = "native"
