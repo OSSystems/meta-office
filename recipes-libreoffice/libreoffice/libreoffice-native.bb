@@ -14,6 +14,7 @@ DEPENDS += " \
     libcdr-native \
     libe-book-native \
     libfreehand-native \
+    hunspell-native \
 "
 
 SRC_URI += " \
@@ -35,6 +36,7 @@ EXTRA_OECONF += " \
     --with-system-expat \
     --with-system-lcms2 \
     --with-system-nss \
+    --with-system-hunspell \
     \
     --without-boost-date-time \
     --without-boost-iostreams \

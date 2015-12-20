@@ -57,6 +57,7 @@ DEPENDS += " \
     libexttextcat \
     clucene-core \
     vigra \
+    hunspell \
 "
 
 # necessary to let the call for python-config succeed
@@ -130,6 +131,7 @@ EXTRA_OECONF += " \
     --with-system-libexttextcat \
     --with-system-clucene \
     --with-system-vigra \
+    --with-system-hunspell \
 "
 
 do_configure() {
