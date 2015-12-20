@@ -21,3 +21,5 @@ DEPENDS = "curl libxml2 cppunit boost"
 EXTRA_OECONF = " \
     --without-man \
 "
+
+BBCLASSEXTEND = "native"
