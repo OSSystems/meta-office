@@ -12,3 +12,5 @@ SRC_URI[sha256sum] = "f24c086cf3523424228ed58b9f678cc7647688822e5407d5fbc155fbfc
 inherit autotools pkgconfig
 
 FILES_${PN} += "${datadir}/vala"
+
+BBCLASSEXTEND = "native"
