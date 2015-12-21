@@ -29,6 +29,7 @@ DEPENDS += " \
     vigra-native \
     libvisio-native \
     libexttextcat-native \
+    hyphen-native \
 "
 
 SRC_URI += " \
@@ -70,6 +71,7 @@ EXTRA_OECONF += " \
     --with-system-vigra \
     --with-system-libvisio \
     --with-system-libexttextcat \
+    --with-system-altlinuxhyph \
     \
     --without-boost-date-time \
     --without-boost-iostreams \

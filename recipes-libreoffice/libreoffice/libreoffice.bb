@@ -59,6 +59,7 @@ DEPENDS += " \
     vigra \
     hunspell \
     mythes \
+    hyphen \
 "
 
 # necessary to let the call for python-config succeed
@@ -137,6 +138,7 @@ EXTRA_OECONF += " \
     --with-system-vigra \
     --with-system-hunspell \
     --with-system-mythes \
+    --with-system-altlinuxhyph \
 "
 
 do_configure() {
