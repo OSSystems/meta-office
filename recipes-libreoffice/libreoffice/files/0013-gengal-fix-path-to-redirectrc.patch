@@ -1,0 +1,28 @@
+From 0840b6904d48399818f17487caf593bc2e9727bd Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Wed, 20 Jan 2016 23:16:10 +0100
+Subject: [PATCH] gengal: fix path to redirectrc
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Change-Id: I4a221b828a2ac9b8fd585d34f8e5197bf40c6498
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ svx/source/gengal/gengal.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/svx/source/gengal/gengal.sh b/svx/source/gengal/gengal.sh
+index 47c82a8..bf6555f 100755
+--- a/svx/source/gengal/gengal.sh
++++ b/svx/source/gengal/gengal.sh
+@@ -94,5 +94,5 @@ echo "$@"
+ 
+ # execute binary
+ exec "$sd_prog/gengal.bin" "$@" \
+-    "-env:INIFILENAME=vnd.sun.star.pathname:$sd_prog/redirectrc"
++    "-env:INIFILENAME=vnd.sun.star.pathname:$sd_cwd/instdir/program/redirectrc"
+ 
+-- 
+2.5.0
+

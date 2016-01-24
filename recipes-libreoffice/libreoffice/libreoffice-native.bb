@@ -37,6 +37,8 @@ SRC_URI += " \
     file://0007-cppumaker-output-more-detailed-error-message.patch \
     file://0008-cppuhelper-defaultbootstrap-output-debug-information.patch \
     file://0011-fix-build-for-x-less-cairp-less-build.patch \
+    file://0012-add-gengal-debug-information.patch \
+    file://0013-gengal-fix-path-to-redirectrc.patch \
 "
 
 EXTRA_OECONF += " \

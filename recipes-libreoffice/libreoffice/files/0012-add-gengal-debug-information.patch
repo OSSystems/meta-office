@@ -1,0 +1,35 @@
+From d15275f988ea61b7ef128ac52f55906500728d7a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Wed, 20 Jan 2016 20:51:02 +0100
+Subject: [PATCH] add gengal debug information
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ svx/source/gengal/gengal.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/svx/source/gengal/gengal.sh b/svx/source/gengal/gengal.sh
+index 7535e25..47c82a8 100755
+--- a/svx/source/gengal/gengal.sh
++++ b/svx/source/gengal/gengal.sh
+@@ -87,6 +87,14 @@ unset XENVIRONMENT
+ # uncomment line below if you encounter problems starting soffice on your system
+ # SAL_NO_XINITTHREADS=true; export SAL_NO_XINITTHREADS
+ 
++echo "gengal sd_prog:"
++echo "$sd_prog"
++echo "@"
++echo "$@"
++echo "gengal sd_cwd:"
++echo "$sd_cwd"
++export
++
+ # execute binary
+ exec "$sd_prog/gengal.bin" "$@" \
+     "-env:INIFILENAME=vnd.sun.star.pathname:$sd_prog/redirectrc"
+-- 
+2.5.0
+
