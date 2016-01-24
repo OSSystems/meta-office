@@ -7,6 +7,7 @@ SRC_URI += " \
     file://0005-ensure-that-native-gendict-build-by-libreoffice-is-u.patch \
     file://0009-add-a-new-gb_Rdb_get_target_for_build_native-and-use.patch \
     file://0010-make-sure-that-gengal-uses-native-libraries.patch \
+    file://0014-Package.mk-workaround-icu-missing-error-for-without-.patch \
 "
 
 DEPENDS += " \
@@ -93,6 +94,7 @@ EXTRA_OECONF += " \
     --disable-coinmp \
     --enable-python=system \
     --with-tls=nss \
+    --without-galleries \
     \
     --with-system-cairo \
     --with-system-poppler \

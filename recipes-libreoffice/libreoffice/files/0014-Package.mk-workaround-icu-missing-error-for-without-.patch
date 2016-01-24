@@ -1,0 +1,29 @@
+From d194f5aef8bf1c16097729d448b34316d621e557 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Sun, 24 Jan 2016 16:55:11 +0100
+Subject: [PATCH] Package.mk: workaround icu missing error for
+ --without-galleries
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ solenv/gbuild/Package.mk | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/solenv/gbuild/Package.mk b/solenv/gbuild/Package.mk
+index 5cbe70c..2cb4e38 100644
+--- a/solenv/gbuild/Package.mk
++++ b/solenv/gbuild/Package.mk
+@@ -79,7 +79,6 @@ $(call gb_Package_get_preparation_target,%) :
+ # Package_foo makefiles.
+ $(call gb_Package_get_target,%) :
+ 	$(call gb_Output_announce,$*,$(true),PKG,2)
+-	$(if $(PACAKGE_DEFINED),,$(call gb_Output_error,Something depends on package $* which does not exist.))
+ 	rm -f $@ && \
+ 	mv $(call var2file,$@.tmp,100,$(sort $(FILES))) $@
+ 
+-- 
+2.5.0
+
