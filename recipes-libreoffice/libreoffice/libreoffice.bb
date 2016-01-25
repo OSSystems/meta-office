@@ -1,5 +1,7 @@
 require ${BPN}.inc
 
+inherit gtk-icon-cache
+
 SRC_URI += " \
     file://0002-configure.ac-skip-some-cross-compile-sections-they-d.patch \
     file://0003-Makefile.in-avoid-building-target-cross-toolset.patch \
@@ -35,6 +37,8 @@ DEPENDS += " \
     cppunit \
     glew \
     openssl \
+    cups \
+    gstreamer1.0-plugins-base \
     \
     mdds \
     glm \
@@ -165,6 +169,33 @@ do_configure() {
     # ensure gengal loads native libraries
     sed -i 's:%STAGING_LIBDIR_NATIVE%:${STAGING_LIBDIR_NATIVE}:g' ${S}/solenv/gbuild/Gallery.mk
 }
+
+do_install() {
+    make DESTDIR=${D} distro-pack-install
+}
+
+
+FILES_${PN} += " \
+    ${datadir}/mime \
+    ${datadir}/application-registry \
+    ${datadir}/mimelnk \
+    ${datadir}/icons \
+    ${datadir}/appdata \
+    ${datadir}/mime-info \
+    ${datadir}/mime/packages \
+    \
+"
+
+PACKAGE_BEFORE_PN += "${PN}-sdk"
+FILES_${PN}-sdk = " \
+    ${libexecdir}/sdk \
+"
+INSANE_SKIP_${PN}-sdk += "dev-so staticdev"
+
+FILES_${PN}-dbg += " \
+    ${libexecdir}/*/.debug \
+    ${libexecdir}/*/*/.debug \
+"
 
 # for scripting (requires python >= 3.3)
 #RDEPENDS_${PN} = "python3"

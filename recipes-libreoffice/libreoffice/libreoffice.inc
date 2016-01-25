@@ -15,7 +15,7 @@ SRC_URI = " \
 SRC_URI[md5sum] = "0c6381581f93ef7142b00837002755dd"
 SRC_URI[sha256sum] = "647440b70fc190a43a3373cfe5b06a87558ee07711e3d74cab8fb9d8cbac6dc8"
 
-inherit autotools pkgconfig distutils-base perlnative
+inherit autotools-brokensep pkgconfig distutils-base perlnative
 
 DEPENDS = "python3-lxml-native ccache-native archive-zip-native gperf-native bison-native"
 
