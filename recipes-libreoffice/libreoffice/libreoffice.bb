@@ -83,7 +83,7 @@ export STAGING_INCDIR
 #
 # 4. TODO --with-parallelism
 # 5. --enable-scripting-javascript / rhino meta-java
-# 6. galleries need a working (native) gengal which has massive/problematic (glew) dependencies
+# 6. galleries missing
 
 EXTRA_OECONF += " \
     --enable-verbose \

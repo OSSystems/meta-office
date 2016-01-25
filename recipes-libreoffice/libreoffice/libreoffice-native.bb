@@ -116,6 +116,8 @@ do_compile() {
     BUILDDIR=${B} oe_runmake Library_configmgr
     BUILDDIR=${B} oe_runmake Library_fwk
     BUILDDIR=${B} oe_runmake Library_i18npool
+
+    # BUILDDIR=${B} oe_runmake Module_external
 }
 
 do_install() {
