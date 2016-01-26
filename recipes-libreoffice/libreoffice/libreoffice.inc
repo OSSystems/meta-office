@@ -37,6 +37,7 @@ LOBUILDTOOLS = " \
 EXTRA_OECONF = " \
     --without-java \
     --without-doxygen \
+    --enable-release-build \
     \
     --with-system-librevenge \
     --with-system-libabw \
