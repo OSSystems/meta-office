@@ -46,6 +46,7 @@ EXTRA_OECONF += " \
     \
     --enable-python=system \
     --without-x \
+    --without-java \
     \
     --with-system-curl \
     --with-system-libpng \

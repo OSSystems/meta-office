@@ -35,7 +35,6 @@ LOBUILDTOOLS = " \
 "
 
 EXTRA_OECONF = " \
-    --without-java \
     --without-doxygen \
     --enable-release-build \
     \

@@ -91,6 +91,7 @@ export STAGING_INCDIR
 
 EXTRA_OECONF += " \
     --enable-verbose \
+    --without-java \
     \
     --enable-gtk3 \
     --disable-postgresql-sdbc \
