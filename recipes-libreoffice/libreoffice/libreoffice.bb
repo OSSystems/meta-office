@@ -14,8 +14,7 @@ SRC_URI += " \
 
 DEPENDS += " \
     ${BPN}-native \
-    gtk+3 \
-    cairo \
+    \
     curl \
     boost \
     icu \
@@ -93,7 +92,6 @@ EXTRA_OECONF += " \
     --enable-verbose \
     --without-java \
     \
-    --enable-gtk3 \
     --disable-postgresql-sdbc \
     --disable-collada \
     --disable-coinmp \
@@ -101,11 +99,9 @@ EXTRA_OECONF += " \
     --with-tls=nss \
     --without-galleries \
     \
-    --with-system-cairo \
     --with-system-poppler \
     --with-system-openldap \
     --with-system-zlib \
-    --with-system-mariadb \
     --with-system-jpeg \
     --with-system-neon \
     --with-system-libpng \
@@ -147,6 +143,16 @@ EXTRA_OECONF += " \
     --with-system-mythes \
     --with-system-altlinuxhyph \
 "
+
+PACKAGECONFIG ??= " \
+    gtk \
+    mariadb \
+"
+
+PACKAGECONFIG[gtk] = "--enable-gtk , --disable-gtk, gtk+ cairo"
+PACKAGECONFIG[gtk3] = "--enable-gtk3 , --disable-gtk3, gtk+3 cairo"
+
+PACKAGECONFIG[mariadb] = "--enable-ext-mariadb-connector --enable-bundle-mariadb --with-system-mariadb, --disable-ext-mariadb-connector --disable-bundle-mariadb, mariadb"
 
 do_configure() {
     olddir=`pwd`
@@ -196,7 +202,5 @@ INSANE_SKIP_${PN}-sdk += "dev-so staticdev"
 FILES_${PN}-dbg += " \
     ${libexecdir}/*/.debug \
     ${libexecdir}/*/*/.debug \
+    ${libexecdir}/*/*/*/.debug \
 "
-
-# for scripting (requires python >= 3.3)
-#RDEPENDS_${PN} = "python3"
