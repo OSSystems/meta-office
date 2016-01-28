@@ -24,7 +24,6 @@ DEPENDS += " \
     openldap \
     nss \
     zlib \
-    mariadb \
     jpeg \
     neon \
     libpng \
