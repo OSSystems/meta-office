@@ -30,6 +30,7 @@ DEPENDS += " \
     libvisio-native \
     libexttextcat-native \
     hyphen-native \
+    gconf-native \
 "
 
 SRC_URI += " \
