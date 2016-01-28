@@ -4,6 +4,7 @@ inherit native
 
 DEPENDS += " \
     curl-native \
+    gconf-native \
     libpng-native \
     jpeg-native \
     libxml2-native \
@@ -30,7 +31,6 @@ DEPENDS += " \
     libvisio-native \
     libexttextcat-native \
     hyphen-native \
-    gconf-native \
 "
 
 SRC_URI += " \
