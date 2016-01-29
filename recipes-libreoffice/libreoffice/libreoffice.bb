@@ -10,6 +10,7 @@ SRC_URI += " \
     file://0009-add-a-new-gb_Rdb_get_target_for_build_native-and-use.patch \
     file://0010-make-sure-that-gengal-uses-native-libraries.patch \
     file://0014-Package.mk-workaround-icu-missing-error-for-without-.patch \
+    file://0015-configure.ac-avoid-finding-calling-pg_config.patch \
 "
 
 DEPENDS += " \
@@ -92,7 +93,6 @@ EXTRA_OECONF += " \
     --enable-verbose \
     --without-java \
     \
-    --disable-postgresql-sdbc \
     --disable-collada \
     --disable-coinmp \
     --enable-python=system \
@@ -147,12 +147,14 @@ EXTRA_OECONF += " \
 PACKAGECONFIG ??= " \
     gtk \
     mariadb \
+    postgresql \
 "
 
 PACKAGECONFIG[gtk] = "--enable-gtk , --disable-gtk, gtk+ cairo"
 PACKAGECONFIG[gtk3] = "--enable-gtk3 , --disable-gtk3, gtk+3 cairo"
 
 PACKAGECONFIG[mariadb] = "--enable-ext-mariadb-connector --enable-bundle-mariadb --with-system-mariadb, --disable-ext-mariadb-connector --disable-bundle-mariadb, mariadb"
+PACKAGECONFIG[postgresql] = "--enable-postgresql-sdbc --with-system-postgresql, --disable-postgresql-sdbc, postgresql"
 
 do_configure() {
     olddir=`pwd`
