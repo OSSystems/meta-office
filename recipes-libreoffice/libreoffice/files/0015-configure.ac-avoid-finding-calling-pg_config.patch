@@ -1,0 +1,37 @@
+From a3d541ac396929b6ab78fcd5d8e8ccc85a6b3a2d Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Thu, 28 Jan 2016 00:49:41 +0100
+Subject: [PATCH] configure.ac: avoid finding/calling pg_config
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Inappropriate [cross compiling specific]
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ configure.ac | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 6a0e646..f253a81 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -8302,12 +8302,8 @@ if test "x$enable_postgresql_sdbc" != "xno"; then
+                 pg_supp_path="$P_SEP$d$pg_supp_path"
+             done
+         fi
+-        AC_PATH_PROG(PGCONFIG, pg_config, ,$PATH$pg_supp_path)
+-        if test -z "$PGCONFIG"; then
+-            AC_MSG_ERROR([pg_config needed; set PGCONFIG if not in PATH])
+-        fi
+-        POSTGRESQL_INC=-I$(${PGCONFIG} --includedir)
+-        POSTGRESQL_LIB="-L$(${PGCONFIG} --libdir)"
++        POSTGRESQL_INC=
++        POSTGRESQL_LIB=
+     else
+         # if/when anything else than PostgreSQL uses Kerberos,
+         # move this out of `test "x$enable_postgresql_sdbc" != "xno"'
+-- 
+2.5.0
+
