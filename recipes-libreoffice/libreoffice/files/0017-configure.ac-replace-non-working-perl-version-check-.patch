@@ -1,0 +1,72 @@
+From cff83a179a2924c8dbd5216462693762871ed99e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Fri, 29 Jan 2016 00:26:12 +0100
+Subject: [PATCH] configure.ac: replace non working perl version check by a
+ fixed version check
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Inappropriate [cross compiling specific]
+
+Change-Id: Ib34a47c1c96331abd37346cad59c5463c220ad36
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ configure.ac | 39 +++------------------------------------
+ 1 file changed, 3 insertions(+), 36 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 42e90f5..e6317f9 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -8222,44 +8222,11 @@ if test "$with_java" != "no"; then
+     if test "$with_system_hsqldb" = "yes"; then
+         AC_MSG_RESULT([external])
+         SYSTEM_HSQLDB=TRUE
+-        if test -z $HSQLDB_JAR; then
+-            HSQLDB_JAR=/usr/share/java/hsqldb.jar
+-        fi
+-        AC_MSG_CHECKING([whether hsqldb is 1.8.0.x])
+-        export HSQLDB_JAR
+-        if $PERL -e \
+-           'use Archive::Zip;
+-            my $file = "$ENV{'HSQLDB_JAR'}";
+-            my $zip = Archive::Zip->new( $file );
+-            my $mf = $zip->contents ( "META-INF/MANIFEST.MF" );
+-            if ( $mf =~ m/Specification-Version: 1.8.*/ )
+-            {
+-                push @l, split(/\n/, $mf);
+-                foreach my $line (@l)
+-                {
+-                    if ($line =~ m/Specification-Version:/)
+-                    {
+-                        ($t, $version) = split (/:/,$line);
+-                        $version =~ s/^\s//;
+-                        ($a, $b, $c, $d) = split (/\./,$version);
+-                        if ($c == "0" && $d > "8")
+-                        {
+-                            exit 0;
+-                        }
+-                        else
+-                        {
+-                            exit 1;
+-                        }
+-                    }
+-                }
+-            }
+-            else
+-            {
+-                exit 1;
+-            }'; then
++        AC_MSG_CHECKING([whether hsqldb is found])
++        if test -f $HSQLDB_JAR ; then
+             AC_MSG_RESULT([yes])
+         else
+-            AC_MSG_ERROR([no, you need hsqldb >= 1.8.0.9 but < 1.8.1])
++            AC_MSG_ERROR([no, version changed in meta-java - you need hsqldb >= 1.8.0.9 but < 1.8.1])
+         fi
+     else
+         AC_MSG_RESULT([internal])
+-- 
+2.5.0
+

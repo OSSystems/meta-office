@@ -11,7 +11,16 @@ SRC_URI += " \
     file://0010-make-sure-that-gengal-uses-native-libraries.patch \
     file://0014-Package.mk-workaround-icu-missing-error-for-without-.patch \
     file://0015-configure.ac-avoid-finding-calling-pg_config.patch \
+    file://0016-configure.ac-don-t-check-locations-apache-common-hsq.patch \
+    file://0017-configure.ac-replace-non-working-perl-version-check-.patch \
 "
+
+# Note hsqldb: currently libreoffice wants a hsqldb 1.8.0.x - see configure.ac.
+# While writing meta-java ships 1.8.0.10 but the perl version checking in 
+# configure.ac does not detect it as valid. To work around and keep track of
+# hsqldb version in meta-java we
+# * hardcode hsqldb version in PACKAGECONFIG[java] see below
+# * patch configure.ac (0017) if the hardcoded file is there
 
 DEPENDS += " \
     ${BPN}-native \
@@ -85,13 +94,10 @@ export STAGING_INCDIR
 # help detecting culprit
 #
 # 4. TODO --with-parallelism
-# 5. --enable-scripting-javascript / rhino meta-java
-# 6. Libreoffice Base embedded db / hsqldb meta-java
-# 7. galleries fail to build / prebuild from external sources?
+# 5. galleries fail to build / prebuild from external sources?
 
 EXTRA_OECONF += " \
     --enable-verbose \
-    --without-java \
     \
     --disable-collada \
     --disable-coinmp \
@@ -148,6 +154,7 @@ PACKAGECONFIG ??= " \
     gtk \
     mariadb \
     postgresql \
+    ${@bb.utils.contains('BBFILE_COLLECTIONS', 'meta-java', 'java', '', d)} \
 "
 
 PACKAGECONFIG[gtk] = "--enable-gtk , --disable-gtk, gtk+ cairo"
@@ -156,6 +163,21 @@ PACKAGECONFIG[gtk3] = "--enable-gtk3 , --disable-gtk3, gtk+3 cairo"
 PACKAGECONFIG[mariadb] = "--enable-ext-mariadb-connector --enable-bundle-mariadb --with-system-mariadb, --disable-ext-mariadb-connector --disable-bundle-mariadb, mariadb"
 PACKAGECONFIG[postgresql] = "--enable-postgresql-sdbc --with-system-postgresql, --disable-postgresql-sdbc, postgresql"
 
+JDK_CROSS = "openjdk-8"
+JAR_NATIVE = "${STAGING_DATADIR_NATIVE}/java"
+PACKAGECONFIG[java] = " \
+    --with-jdk-home=${STAGING_LIBDIR_NATIVE}/jvm/${JDK_CROSS}-native --with-ant-home=${JAR_NATIVE} --with-junit=no \
+    --enable-scripting-javascript \
+    --with-system-hsqldb --with-hsqldb-jar=${STAGING_DATADIR}/java/hsqldb-1.8.0.10.jar \
+    --with-system-apache-commons \
+    --with-commons-codec-jar=${STAGING_DATADIR}/java/commons-codec.jar --with-commons-httpclient-jar=${STAGING_DATADIR}/java/commons-httpclient.jar \
+    --with-commons-logging-jar=${STAGING_DATADIR}/java/commons-logging.jar --with-commons-lang-jar=${STAGING_DATADIR}/java/commons-lang.jar \
+    , \
+    --without-java \
+    , \
+    ${JDK_CROSS} hsqldb rhino commons-codec commons-httpclient commons-logging commons-lang \
+"
+
 do_configure() {
     olddir=`pwd`
     cd ${S}
@@ -163,6 +185,15 @@ do_configure() {
     gnu-configize
     autoconf
     cd $olddir
+
+    # we need to help configuration to find platform specific libjawt
+    # by default it would search in native sysroot
+    if [ -d ${STAGING_LIBDIR}/jvm/${JDK_CROSS}/lib ]; then
+        JAWTDIR=`find ${STAGING_LIBDIR}/jvm/${JDK_CROSS}/lib -name libjawt.so`
+        JAWTDIR=`dirname $JAWTDIR`
+        export JAWTLIB="-L$JAWTDIR -ljawt"
+        echo "JAWTLIB=$JAWTLIB"
+    fi
     oe_runconf
 
     mkdir -p ${B}/workdir/Executable

@@ -1,0 +1,74 @@
+From 1248bc37fbb2bdf7535126b394101ebb05dd8218 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Thu, 28 Jan 2016 23:21:23 +0100
+Subject: [PATCH] configure.ac: don't check locations apache-common/hsqldb
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+AC_CHECK_FILE fails for cross build
+
+Upstream-Status: Inappropriate [cross compiling specific]
+
+Change-Id: Ife465c1222a3348019a418dc2c26f7d90f03b9cf
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ configure.ac | 14 --------------
+ 1 file changed, 14 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 9df3182..42e90f5 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -8225,8 +8225,6 @@ if test "$with_java" != "no"; then
+         if test -z $HSQLDB_JAR; then
+             HSQLDB_JAR=/usr/share/java/hsqldb.jar
+         fi
+-        AC_CHECK_FILE($HSQLDB_JAR, [],
+-               [AC_MSG_ERROR(hsqldb.jar not found.)], [])
+         AC_MSG_CHECKING([whether hsqldb is 1.8.0.x])
+         export HSQLDB_JAR
+         if $PERL -e \
+@@ -10709,9 +10707,6 @@ if test "$ENABLE_MEDIAWIKI" = "TRUE" -o "$ENABLE_REPORTBUILDER" = "TRUE"; then
+                         )
+                     ]
+                 )
+-            else
+-                AC_CHECK_FILE($COMMONS_CODEC_JAR, [],
+-                    [AC_MSG_ERROR(commons-codec.jar not found.)], [])
+             fi
+ 
+             if test -z $COMMONS_LANG_JAR; then
+@@ -10730,9 +10725,6 @@ if test "$ENABLE_MEDIAWIKI" = "TRUE" -o "$ENABLE_REPORTBUILDER" = "TRUE"; then
+                             )
+                     ]
+                 )
+-            else
+-                AC_CHECK_FILE($COMMONS_LANG_JAR, [],
+-                    [AC_MSG_ERROR(commons-lang.jar not found.)], [])
+             fi
+ 
+             if test -z $COMMONS_HTTPCLIENT_JAR; then
+@@ -10745,9 +10737,6 @@ if test "$ENABLE_MEDIAWIKI" = "TRUE" -o "$ENABLE_REPORTBUILDER" = "TRUE"; then
+                         )
+                     ]
+                 )
+-            else
+-                AC_CHECK_FILE($COMMONS_HTTPCLIENT_JAR, [],
+-                    [AC_MSG_ERROR(commons-httpclient.jar not found.)], [])
+             fi
+         fi
+         if test "$ENABLE_MEDIAWIKI" = "TRUE" -o "$ENABLE_REPORTBUILDER" = "TRUE"; then
+@@ -10761,9 +10750,6 @@ if test "$ENABLE_MEDIAWIKI" = "TRUE" -o "$ENABLE_REPORTBUILDER" = "TRUE"; then
+                         )
+                     ]
+                 )
+-            else
+-                AC_CHECK_FILE($COMMONS_LOGGING_JAR, [],
+-                    [AC_MSG_ERROR(commons-logging.jar not found.)], [])
+             fi
+         fi
+     else
+-- 
+2.5.0
+
