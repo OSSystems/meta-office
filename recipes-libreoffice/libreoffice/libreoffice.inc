@@ -6,10 +6,10 @@ LIC_FILES_CHKSUM = " \
     file://COPYING.MPL;md5=9741c346eef56131163e13b9db1241b3 \
 "
 
-PV = "5.0.4.2"
+require libreoffice-version.inc
 
 SRC_URI = " \
-    http://download.documentfoundation.org/libreoffice/src/5.0.4/libreoffice-${PV}.tar.xz \
+    http://download.documentfoundation.org/libreoffice/src/${DIRV}/libreoffice-${PV}.tar.xz \
     file://0001-update-ax_boost-scripts-to-fix-configure-with-system.patch \
 "
 SRC_URI[md5sum] = "0c6381581f93ef7142b00837002755dd"
