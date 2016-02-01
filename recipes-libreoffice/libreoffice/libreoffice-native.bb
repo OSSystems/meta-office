@@ -114,6 +114,7 @@ do_compile() {
     BUILDDIR=${B} oe_runmake -f ${S}/Makefile.gbuild build-tools
     # gengal was not designed for build on its own - we need to add dependencies
     BUILDDIR=${B} oe_runmake Executable_gengal
+    BUILDDIR=${B} oe_runmake Executable_cfgex
     BUILDDIR=${B} oe_runmake Library_ucb1
     BUILDDIR=${B} oe_runmake Library_configmgr
     BUILDDIR=${B} oe_runmake Library_fwk

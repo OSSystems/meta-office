@@ -21,17 +21,21 @@ DEPENDS = "python3-lxml-native ccache-native archive-zip-native gperf-native bis
 
 LOBUILDTOOLS = " \
     bestreversemap \
+    cfgex \
     cpp \
     gencoll_rule \
     genconv_dict \
     genindex_data \
+    propex \
     rsc \
     saxparser \
     svidl \
     transex3 \
     ulfex \
+    uiex \
     unoidl-check \
     unoidl-write \
+    xrmex \
 "
 
 EXTRA_OECONF = " \
