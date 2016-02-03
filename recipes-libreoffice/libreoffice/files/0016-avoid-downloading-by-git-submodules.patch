@@ -1,0 +1,32 @@
+From f52d4fea70f71b844b4ad757df61423e08366083 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Andreas=20M=C3=BCller?= <schnitzeltony@googlemail.com>
+Date: Sun, 31 Jan 2016 21:10:32 +0100
+Subject: [PATCH] avoid downloading by git submodules
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Upstream-Status: Inappropriate [configuration]
+
+Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
+---
+ configure.ac | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/configure.ac b/configure.ac
+index 9df3182..ccae843 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -12312,6 +12312,9 @@ if test "$enable_release_build" = "" -o "$enable_release_build" = "no"; then
+     test "$WITH_LANG_LIST" = "en-US" || WITH_LANG_LIST=`echo $WITH_LANG_LIST qtz`
+     ALL_LANGS=`echo $ALL_LANGS qtz`
+ fi
++
++GIT_NEEDED_SUBMODULES=
++
+ AC_SUBST(ALL_LANGS)
+ AC_SUBST(WITH_LANG)
+ AC_SUBST(WITH_LANG_LIST)
+-- 
+2.5.0
+

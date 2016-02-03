@@ -3,6 +3,7 @@ require ${BPN}.inc
 inherit gtk-icon-cache
 
 SRC_URI += " \
+    http://download.documentfoundation.org/libreoffice/src/${DIRV}/${BPN}-translations-${PV}.tar.xz;name=translations \
     file://0002-configure.ac-skip-some-cross-compile-sections-they-d.patch \
     file://0003-Makefile.in-avoid-building-target-cross-toolset.patch \
     file://0004-remove-paths-for-gb_Executable_get_command.patch \
@@ -11,7 +12,11 @@ SRC_URI += " \
     file://0010-make-sure-that-gengal-uses-native-libraries.patch \
     file://0014-Package.mk-workaround-icu-missing-error-for-without-.patch \
     file://0015-configure.ac-avoid-finding-calling-pg_config.patch \
+    file://0016-avoid-downloading-by-git-submodules.patch \
 "
+
+SRC_URI[translations.md5sum] = "73711d36f4d16b0e2657367c823e1872"
+SRC_URI[translations.sha256sum] = "0adeb2b7ccc4ffb2fb58b036029c161f8971b03610c383cc120be2a712d1b9cd"
 
 DEPENDS += " \
     ${BPN}-native \
@@ -92,6 +97,7 @@ export STAGING_INCDIR
 EXTRA_OECONF += " \
     --enable-verbose \
     --without-java \
+    --with-lang=ALL \
     \
     --disable-collada \
     --disable-coinmp \
@@ -206,3 +212,95 @@ FILES_${PN}-dbg += " \
     ${libexecdir}/*/*/.debug \
     ${libexecdir}/*/*/*/.debug \
 "
+
+# based http://pkgs.fedoraproject.org/cgit/rpms/libreoffice.git/tree/libreoffice.spec
+LO_LANGUAGE_FILES = " \
+    ${libexecdir}/share/autocorr/*%{1}.dat \
+    ${libexecdir}/program/resource/*%{1}.res \
+    ${libexecdir}/share/config/soffice.cfg/modules/*/ui/res/%{1}.zip \
+    ${libexecdir}/share/config/soffice.cfg/*/ui/res/%{1}.zip \
+    ${libexecdir}/share/template/%{1} \
+    ${libexecdir}/share/registry/Langpack-%{1}.xcd \
+    ${libexecdir}/share/registry/res/registry_%{1}.xcd \
+    ${libexecdir}/share/registry/res/fcfg_langpack_%{1}.xcd \
+"
+
+python lo_do_split_locales() {
+    import glob, subprocess
+
+    packages = (d.getVar('PACKAGES', True) or "").split()
+
+    datadir = d.getVar('datadir', True)
+    if not datadir:
+        bb.note("datadir not defined")
+        return
+
+    dvar = d.getVar('PKGD', True)
+    pn = d.getVar('LOCALEBASEPN', True)
+
+    if pn + '-locale' in packages:
+        packages.remove(pn + '-locale')
+
+    # extract locales from translation source path
+    # this won't add en-US which comes with base sources
+    locales = []
+    transpaths = glob.glob('%s/translations/source/*' % d.getVar('S', True))
+    for l in transpaths:
+        locale = l.replace('%s/translations/source/' % d.getVar('S', True), '')
+        if not locale in locales:
+            locales.append(locale)
+
+    # find the paths where locales are found
+    # en-US is fallback so it should be implemented everywhere (= folder created)
+    langfallback = 'en-US'
+    findCMD = 'find %s -name "*%s*"' % (dvar, langfallback)
+    fallbacksearchresult = subprocess.Popen(findCMD, stdout=subprocess.PIPE, shell=True).communicate()[0]
+    # uncomment to see if we need more entries in LO_LANGUAGE_FILES
+    # bb.note("fallbacksearchresult = %s" % fallbacksearchresult.replace(dvar, ''))
+
+    # check for files matching at each location / language
+    langfiles = dict()
+    for transvar in d.getVar('LO_LANGUAGE_FILES', True).split():
+        filesfound = 0
+        for locale in sorted(locales):
+            pattern = transvar.replace('%{1}', locale)
+            translocation = '%s%s' % (dvar, pattern)
+            transfiles = glob.glob(translocation)
+            if transfiles:
+                if locale not in langfiles:
+                    langfiles[locale] = ''
+                langfiles[locale] = '%s %s' % (langfiles[locale], pattern)
+                filesfound = 1
+        if filesfound:
+            # remove from fallbacksearchresult REVISIT
+            pattern = transvar.replace('%{1}', langfallback)
+            translocation = '%s%s' % (dvar, pattern)
+            if translocation in fallbacksearchresult:
+                fallbacksearchresult.replace(translocation, '')
+        else:
+            bb.warn('%s language file pattern not found:  %s' % (d.getVar('PN', True), transvar))
+
+    # setup packages for locales with files found
+    summary = d.getVar('SUMMARY', True) or pn
+    description = d.getVar('DESCRIPTION', True) or ""
+    locale_section = d.getVar('LOCALE_SECTION', True)
+    mlprefix = d.getVar('MLPREFIX', True) or ""
+    for locale in locales:
+        if locale in langfiles:
+            ln = legitimize_package_name(locale)
+            pkg = pn + '-locale-' + ln
+            packages.insert(0, pkg)
+            d.setVar('FILES_' + pkg, langfiles[locale] )
+            d.setVar('RRECOMMENDS_' + pkg, '%svirtual-locale-%s' % (mlprefix, ln))
+            d.setVar('RPROVIDES_' + pkg, '%s-locale %s%s-translation' % (pn, mlprefix, ln))
+            d.setVar('SUMMARY_' + pkg, '%s - %s translations' % (summary, l))
+            d.setVar('DESCRIPTION_' + pkg, '%s  This package contains language translation files for the %s locale.' % (description, l))
+            if locale_section:
+                d.setVar('SECTION_' + pkg, locale_section)
+
+    d.setVar('PACKAGES', ' '.join(packages))
+
+    return
+}
+
+PACKAGESPLITFUNCS_prepend = "lo_do_split_locales "
