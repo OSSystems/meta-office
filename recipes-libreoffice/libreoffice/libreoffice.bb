@@ -69,6 +69,7 @@ DEPENDS += " \
     hunspell \
     mythes \
     hyphen \
+    graphite2 \
 "
 
 # necessary to let the call for python-config succeed
@@ -148,6 +149,7 @@ EXTRA_OECONF += " \
     --with-system-hunspell \
     --with-system-mythes \
     --with-system-altlinuxhyph \
+    --with-system-graphite \
 "
 
 PACKAGECONFIG ??= " \
