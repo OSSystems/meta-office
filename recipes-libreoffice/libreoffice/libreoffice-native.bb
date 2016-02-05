@@ -123,6 +123,26 @@ do_compile() {
     # BUILDDIR=${B} oe_runmake Module_external
 }
 
+LOBUILDTOOLS = " \
+    bestreversemap \
+    cfgex \
+    cpp \
+    gencoll_rule \
+    genconv_dict \
+    genindex_data \
+    idxdict \
+    propex \
+    rsc \
+    saxparser \
+    svidl \
+    transex3 \
+    ulfex \
+    uiex \
+    unoidl-check \
+    unoidl-write \
+    xrmex \
+"
+
 do_install() {
     install -d ${D}/${bindir}
     for name in ${LOBUILDTOOLS} ; do
