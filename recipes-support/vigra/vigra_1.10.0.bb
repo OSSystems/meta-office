@@ -13,6 +13,8 @@ inherit cmake
 
 DEPENDS = "tiff jpeg libpng"
 
+EXTRA_OECMAKE += "-DWITH_VIGRANUMPY=0"
+
 do_install_append() {
     # doc does not have useful content and is installed at the wrong location
     # so delete it
