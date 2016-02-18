@@ -1,5 +1,7 @@
 require ${BPN}.inc
 
+FILESEXTRAPATHS =. "${FILE_DIRNAME}/${PN}:"
+
 inherit native
 
 DEPENDS += " \
@@ -34,12 +36,12 @@ DEPENDS += " \
 "
 
 SRC_URI += " \
-    file://0006-saxparser-output-calling-parametrs-for-debug.patch \
-    file://0007-cppumaker-output-more-detailed-error-message.patch \
-    file://0008-cppuhelper-defaultbootstrap-output-debug-information.patch \
-    file://0011-fix-build-for-x-less-cairp-less-build.patch \
-    file://0012-add-gengal-debug-information.patch \
-    file://0013-gengal-fix-path-to-redirectrc.patch \
+    file://0001-saxparser-output-calling-parametrs-for-debug.patch \
+    file://0002-cppumaker-output-more-detailed-error-message.patch \
+    file://0003-cppuhelper-defaultbootstrap-output-debug-information.patch \
+    file://0004-fix-build-for-x-less-cairp-less-build.patch \
+    file://0005-add-gengal-debug-information.patch \
+    file://0006-gengal-fix-path-to-redirectrc.patch \
 "
 
 EXTRA_OECONF += " \

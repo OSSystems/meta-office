@@ -4,15 +4,15 @@ inherit gtk-icon-cache
 
 SRC_URI += " \
     http://download.documentfoundation.org/libreoffice/src/${DIRV}/${BPN}-translations-${PV}.tar.xz;name=translations \
-    file://0002-configure.ac-skip-some-cross-compile-sections-they-d.patch \
-    file://0003-Makefile.in-avoid-building-target-cross-toolset.patch \
-    file://0004-remove-paths-for-gb_Executable_get_command.patch \
-    file://0005-ensure-that-native-gendict-build-by-libreoffice-is-u.patch \
-    file://0009-add-a-new-gb_Rdb_get_target_for_build_native-and-use.patch \
-    file://0010-make-sure-that-gengal-uses-native-libraries.patch \
-    file://0014-Package.mk-workaround-icu-missing-error-for-without-.patch \
-    file://0015-configure.ac-avoid-finding-calling-pg_config.patch \
-    file://0016-avoid-downloading-by-git-submodules.patch \
+    file://0001-configure.ac-skip-some-cross-compile-sections-they-d.patch \
+    file://0002-Makefile.in-avoid-building-target-cross-toolset.patch \
+    file://0003-remove-paths-for-gb_Executable_get_command.patch \
+    file://0004-ensure-that-native-gendict-build-by-libreoffice-is-u.patch \
+    file://0005-add-a-new-gb_Rdb_get_target_for_build_native-and-use.patch \
+    file://0006-make-sure-that-gengal-uses-native-libraries.patch \
+    file://0007-Package.mk-workaround-icu-missing-error-for-without-.patch \
+    file://0008-configure.ac-avoid-finding-calling-pg_config.patch \
+    file://0009-avoid-downloading-by-git-submodules.patch \
 "
 
 SRC_URI[translations.md5sum] = "73711d36f4d16b0e2657367c823e1872"
