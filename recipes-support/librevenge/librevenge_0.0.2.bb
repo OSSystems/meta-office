@@ -14,3 +14,7 @@ inherit autotools pkgconfig
 DEPENDS = "cppunit zlib boost"
 
 BBCLASSEXTEND = "native"
+
+do_install_append() {
+    sed -i '/^Libs:/ s/$/ -lboost_system/' ${D}${libdir}/pkgconfig/librevenge-0.0.pc
+}
