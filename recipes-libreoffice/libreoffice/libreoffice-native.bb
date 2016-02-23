@@ -104,7 +104,7 @@ do_configure() {
     gnu-configize
     autoconf
     cd $olddir
-    oe_runconf
+    PYTHON_CFLAGS=-I${STAGING_INCDIR_NATIVE}/${PYTHON_DIR} PYTHON_LIBS="-L${STAGING_LIBDIR_NATIVE} -lpython${PYTHON_BASEVERSION}" oe_runconf
 }
 
 # for debugging - we can as we're native
