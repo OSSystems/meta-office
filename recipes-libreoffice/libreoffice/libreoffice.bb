@@ -178,7 +178,8 @@ do_configure() {
     # icu binaries are expected in our build tree
     mkdir -p ${B}/workdir/UnpackedTarball/icu/source/
     cd ${B}/workdir/UnpackedTarball/icu/source/
-    ln -sf ${STAGING_DATADIR_NATIVE}/icu/55.1/bin
+    icu_bindir=`find ${STAGING_DATADIR_NATIVE}/icu -name bin`
+    ln -sf $icu_bindir
 
     # link to native saxparser.rdb - cross version of that file is useless
     sed -i 's:%STAGING_LIBDIR_NATIVE%:${STAGING_LIBDIR_NATIVE}:g' ${S}/solenv/gbuild/TargetLocations.mk
