@@ -206,26 +206,26 @@ FILES_${PN} += " \
 
 PACKAGE_BEFORE_PN += "${PN}-sdk"
 FILES_${PN}-sdk = " \
-    ${libexecdir}/sdk \
+    ${libdir}/libreoffice/sdk \
 "
 INSANE_SKIP_${PN}-sdk += "dev-so staticdev"
 
 FILES_${PN}-dbg += " \
-    ${libexecdir}/*/.debug \
-    ${libexecdir}/*/*/.debug \
-    ${libexecdir}/*/*/*/.debug \
+    ${libdir}/libreoffice/*/.debug \
+    ${libdir}/libreoffice/*/*/.debug \
+    ${libdir}/libreoffice/*/*/*/.debug \
 "
 
 # based http://pkgs.fedoraproject.org/cgit/rpms/libreoffice.git/tree/libreoffice.spec
 LO_LANGUAGE_FILES = " \
-    ${libexecdir}/share/autocorr/*%{1}.dat \
-    ${libexecdir}/program/resource/*%{1}.res \
-    ${libexecdir}/share/config/soffice.cfg/modules/*/ui/res/%{1}.zip \
-    ${libexecdir}/share/config/soffice.cfg/*/ui/res/%{1}.zip \
-    ${libexecdir}/share/template/%{1} \
-    ${libexecdir}/share/registry/Langpack-%{1}.xcd \
-    ${libexecdir}/share/registry/res/registry_%{1}.xcd \
-    ${libexecdir}/share/registry/res/fcfg_langpack_%{1}.xcd \
+    ${libdir}/libreoffice/share/autocorr/*%{1}.dat \
+    ${libdir}/libreoffice/program/resource/*%{1}.res \
+    ${libdir}/libreoffice/share/config/soffice.cfg/modules/*/ui/res/%{1}.zip \
+    ${libdir}/libreoffice/share/config/soffice.cfg/*/ui/res/%{1}.zip \
+    ${libdir}/libreoffice/share/template/%{1} \
+    ${libdir}/libreoffice/share/registry/Langpack-%{1}.xcd \
+    ${libdir}/libreoffice/share/registry/res/registry_%{1}.xcd \
+    ${libdir}/libreoffice/share/registry/res/fcfg_langpack_%{1}.xcd \
 "
 
 python lo_do_split_locales() {
