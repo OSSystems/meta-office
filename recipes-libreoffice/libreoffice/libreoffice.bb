@@ -15,8 +15,8 @@ SRC_URI += " \
     file://0009-avoid-downloading-by-git-submodules.patch \
 "
 
-SRC_URI[translations.md5sum] = "73711d36f4d16b0e2657367c823e1872"
-SRC_URI[translations.sha256sum] = "0adeb2b7ccc4ffb2fb58b036029c161f8971b03610c383cc120be2a712d1b9cd"
+SRC_URI[translations.md5sum] = "9698d9d5948988a8f130d909bb0675ce"
+SRC_URI[translations.sha256sum] = "67ad8bf35e55f3acb77a4fa9f1e07784a2acde72dcc9126567c833af70748b8d"
 
 DEPENDS += " \
     ${BPN}-native \

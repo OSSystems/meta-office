@@ -12,28 +12,46 @@ Upstream-Status: submitted [1]
 
 Signed-off-by: Andreas Müller <schnitzeltony@googlemail.com>
 ---
- vcl/headless/svpgdi.cxx | 4 ++++
- 1 file changed, 4 insertions(+)
+ vcl/headless/svpgdi.cxx | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/vcl/headless/svpgdi.cxx b/vcl/headless/svpgdi.cxx
-index cc4baab..85f8a35 100644
+index 21efd33..d1f4df1 100644
 --- a/vcl/headless/svpgdi.cxx
 +++ b/vcl/headless/svpgdi.cxx
-@@ -657,6 +657,7 @@ bool SvpSalGraphics::drawPolyPolygonBezier( sal_uInt32,
-     return false;
+@@ -645,6 +645,7 @@ void SvpSalGraphics::drawPolyPolygon( sal_uInt32 nPoly,
+     dbgOut( m_aDevice );
  }
  
 +#if ENABLE_CAIRO_CANVAS
  #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 10, 0)
  static void AddPolygonToPath(cairo_t* cr, const basegfx::B2DPolygon& rPolygon, bool bClosePath)
  {
-@@ -719,11 +720,13 @@ static void AddPolygonToPath(cairo_t* cr, const basegfx::B2DPolygon& rPolygon, b
+@@ -707,6 +708,7 @@ static void AddPolygonToPath(cairo_t* cr, const basegfx::B2DPolygon& rPolygon, b
      }
  }
  #endif
 +#endif
  
- bool SvpSalGraphics::drawPolyPolygon(const basegfx::B2DPolyPolygon& rPolyPoly, double fTransparency)
+ bool SvpSalGraphics::drawPolyLine(
+     const ::basegfx::B2DPolygon& rPolyLine,
+@@ -717,6 +719,7 @@ bool SvpSalGraphics::drawPolyLine(
+ {
+     bool bRet = false;
+     (void)rPolyLine; (void)fTransparency; (void)rLineWidths; (void)eLineJoin; (void)eLineCap;
++#if ENABLE_CAIRO_CANVAS
+ #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 10, 0)
+     // short circuit if there is nothing to do
+     const int nPointCount = rPolyLine.count();
+@@ -825,6 +828,7 @@ bool SvpSalGraphics::drawPolyLine(
+     }
+     bRet = true;
+ #endif
++#endif
+     return bRet;
+ }
+ 
+@@ -857,6 +861,7 @@ bool SvpSalGraphics::drawPolyPolygon(const basegfx::B2DPolyPolygon& rPolyPoly, d
  {
      bool bRet = false;
      (void)rPolyPoly; (void)fTransparency;
@@ -41,7 +59,7 @@ index cc4baab..85f8a35 100644
  #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 10, 0)
      if (m_bUseLineColor || !m_bUseFillColor)
      {
-@@ -768,6 +771,7 @@ bool SvpSalGraphics::drawPolyPolygon(const basegfx::B2DPolyPolygon& rPolyPoly, d
+@@ -901,6 +906,7 @@ bool SvpSalGraphics::drawPolyPolygon(const basegfx::B2DPolyPolygon& rPolyPoly, d
      }
      bRet = true;
  #endif
