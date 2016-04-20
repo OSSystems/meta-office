@@ -1,6 +1,6 @@
 require ${BPN}.inc
 
-inherit gtk-icon-cache
+inherit gtk-icon-cache pythonnative
 
 SRC_URI += " \
     http://download.documentfoundation.org/libreoffice/src/${DIRV}/${BPN}-translations-${PV}.tar.xz;name=translations \
@@ -171,7 +171,9 @@ do_configure() {
     gnu-configize
     autoconf
     cd $olddir
-    PYTHON_CFLAGS=-I${STAGING_INCDIR}/${PYTHON_DIR} PYTHON_LIBS="-L${STAGING_LIBDIR} -lpython${PYTHON_BASEVERSION}" oe_runconf
+    export PYTHON_CFLAGS=-I${STAGING_INCDIR}/${PYTHON_DIR}
+    export PYTHON_LIBS="-L${STAGING_LIBDIR} -lpython${PYTHON_BASEVERSION}"
+    oe_runconf
 
     mkdir -p ${B}/workdir/Executable
 
