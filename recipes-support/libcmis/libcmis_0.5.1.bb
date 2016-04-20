@@ -9,7 +9,9 @@ LIC_FILES_CHKSUM = " \
 
 SRC_URI = " \
     https://github.com/tdf/libcmis/releases/download/v${PV}/${BPN}-${PV}.tar.gz \
+    file://0001-Avoid-cross-compile-unsafe-paths.patch \
 "
+
 SRC_URI[md5sum] = "3270154f0f40d86fce849b161f914101"
 SRC_URI[sha256sum] = "6acbdf22ecdbaba37728729b75bfc085ee5a4b49a6024757cfb86ccd3da27b0e"
 
