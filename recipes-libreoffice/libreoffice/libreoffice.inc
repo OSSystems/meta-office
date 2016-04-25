@@ -20,6 +20,7 @@ EXTRA_OECONF = " \
     --without-doxygen \
     --enable-release-build \
     --enable-verbose \
+    --with-parallelism=${@oe.utils.cpu_count()} \
     \
     --with-system-librevenge \
     --with-system-libabw \

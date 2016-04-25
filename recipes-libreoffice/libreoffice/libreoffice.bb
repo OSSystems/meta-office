@@ -89,7 +89,6 @@ export STAGING_INCDIR
 # 3. in case of trouble in do_compile: configure with --enable-verbose might
 # help detecting culprit
 #
-# 4. TODO --with-parallelism
 # 5. --enable-scripting-javascript / rhino meta-java
 # 6. Libreoffice Base embedded db / hsqldb meta-java
 # 7. galleries fail to build / prebuild from external sources?
