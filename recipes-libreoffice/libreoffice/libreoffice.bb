@@ -96,7 +96,6 @@ export STAGING_INCDIR
 # 7. galleries fail to build / prebuild from external sources?
 
 EXTRA_OECONF += " \
-    --enable-verbose \
     --without-java \
     --with-lang=ALL \
     \

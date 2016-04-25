@@ -19,6 +19,7 @@ DEPENDS = "python3-lxml-native ccache-native archive-zip-native gperf-native bis
 EXTRA_OECONF = " \
     --without-doxygen \
     --enable-release-build \
+    --enable-verbose \
     \
     --with-system-librevenge \
     --with-system-libabw \
