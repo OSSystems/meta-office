@@ -22,7 +22,6 @@ DEPENDS += " \
     ${BPN}-native \
     \
     curl \
-    boost \
     icu \
     expat \
     poppler \
