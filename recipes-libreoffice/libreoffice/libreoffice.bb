@@ -102,6 +102,7 @@ EXTRA_OECONF += " \
     --enable-python=system \
     --with-tls=nss \
     --without-galleries \
+    --disable-odk \
     \
     --with-system-poppler \
     --with-system-openldap \
