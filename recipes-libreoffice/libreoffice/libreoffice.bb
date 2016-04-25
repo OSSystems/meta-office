@@ -157,6 +157,7 @@ PACKAGECONFIG ??= " \
 
 PACKAGECONFIG[gtk] = "--enable-gtk , --disable-gtk, gtk+ cairo"
 PACKAGECONFIG[gtk3] = "--enable-gtk3 , --disable-gtk3, gtk+3 cairo"
+PACKAGECONFIG[avahi] = "--enable-avahi, --disable-avahi, avahi"
 
 PACKAGECONFIG[mariadb] = "--enable-ext-mariadb-connector --enable-bundle-mariadb --with-system-mariadb, --disable-ext-mariadb-connector --disable-bundle-mariadb, mariadb"
 PACKAGECONFIG[postgresql] = "--enable-postgresql-sdbc --with-system-postgresql, --disable-postgresql-sdbc, postgresql"
